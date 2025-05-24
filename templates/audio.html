@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/audio.css">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
+    <title>GWS - Audios</title>
+</head>
+<body>
+    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+
+    <div id="botoes-caixa">
+        <form action="/graywolf-audio/music" method="GET">
+            <button type="submit" id="musicPageButton">
+                <img class="icon_button" src="../static/images/music_icon.png" alt="music_icon">
+                <p class="text_button">Música</p>
+            </button>    
+        </form>
+        <form action="graywolf-audio/podcast" method="GET">
+            <button type="submit" id="audioPageButton">
+                <img class="icon_button" src="../static/images/podcast_icon.png" alt="podcast_icon">
+                <p class="text_button">Podcast</p>
+            </button>
+        </form>
+        <form action="graywolf-audio/audio_no_category" method="GET">
+            <button type="submit" id="audio_no_categoryPageButton">
+                <img class="icon_button" src="../static/images/audio_no_category_icon.png" alt="podcast_icon">
+                <p class="text_button">Audios</p>
+            </button>
+        </form>
+    </div>
+    <div id="botoes-caixa">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit">Voltar para HomePage.</button>
+        </form>
+    </div>
+
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>    
+</body>
+</html>

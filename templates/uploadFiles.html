@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/uploads.css">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
+    <title>GWS - Uploads</title>
+</head>
+<body>
+    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+    {% if arquivos %}
+        {% for arquivo in arquivos %}
+            <div class="arquivo">
+                <span>{{ arquivo }}</span>
+                <a href="{{ url_for('download_arquivo', nome_arquivo=arquivo) }}">Baixar</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum arquivo encontrado.</p>
+    {% endif %}
+    <div id="botoes-caixa">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit">Voltar para HomePage.</button>
+        </form>
+    </div>
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>    
+</body>
+</html>

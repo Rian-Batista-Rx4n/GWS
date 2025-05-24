@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/text.css">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
+    <title>GWS - Textos</title>
+</head>
+<body>
+    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+
+    <div id="botoes-caixa">
+        <form action="/graywolf-list" method="GET">
+            <button type="submit" id="listPageButton"><img class="icon_button" src="../static/images/list_icon.png" alt="list_icon"><p class="text_button">Lista</p></button>    
+        </form>
+        <form action="/graywolf-note" method="GET">
+            <button type="submit" id="notePageButton"><img class="icon_button" src="../static/images/note_icon.png" alt="note_icon"><p class="text_button">Anotação</p></button>    
+        </form>
+        <form action="/graywolf-script" method="GET">
+            <button type="submit" id="scriptPageButton"><img class="icon_button" src="../static/images/script_icon.png" alt="script_icon"><p class="text_button">Script</p></button>    
+        </form>
+        <form action="/graywolf-text-no-category" method="GET">
+            <button type="submit" id="textNoCategoryPageButton"><img class="icon_button" src="../static/images/text_no_category_icon.png" alt="text_no_category_icon"><p class="text_button">Qualquer Texto</p></button>    
+        </form>
+        <form action="/graywolf-upload" method="GET">
+            <button type="submit" id="uploadPageButton"><img class="icon_button" src="../static/images/upload_icon.png" alt="upload_icon"><p class="text_button">Upload</p></button>    
+        </form>
+    </div>
+    <div id="botoes-caixa">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit">Voltar para HomePage.</button>
+        </form>
+    </div>
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>    
+</body>
+</html>

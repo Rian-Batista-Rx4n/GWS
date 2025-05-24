@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/register.css">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
+    <title>GrayWolf</title>
+</head>
+<body>
+    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+    <div id="caixa_login-1">
+        <img id="logo_imagem" src="../static/images/GrayWolf_512x.png" alt="logo-imagem">
+        <p id="texto_1">Insira as credencias.</p>
+        <form action="/graywolf-register" method="POST">
+            <div id="caixa-login-2">
+                <input type="text" name="nome_usuario" id="nome_usuario" required placeholder="Usuário"><br>
+                <input type="password" name="senha_usuario" id="senha_usuario" required placeholder="Senha"><br>
+            </div>
+            <div>
+                <input type="checkbox" name="permition1" id="permition1"> Ler
+                <input type="checkbox" name="permition2" id="permition2"> Escrever
+                <input type="checkbox" name="permition3" id="permition3"> Editar
+            </div>
+            <div class="botoes_logon">
+                <button class="botao_login">Cadastrar</button>
+            </div>          
+        </form>
+
+    </div>
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>
+    <script src="../static/script.js"></script>
+</body>
+</html>
