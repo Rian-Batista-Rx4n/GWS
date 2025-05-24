@@ -1,0 +1,1 @@
+#Criar pasta text_no_category
