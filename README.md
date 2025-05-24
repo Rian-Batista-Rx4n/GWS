@@ -45,6 +45,8 @@ Principais recursos:
 - Agora seu armazenamento local do servidor (local onde tá sendo executado) vira uma memoria remota de acordo com seu armazenamento atual
 - Pode ser acessado pelo ip da maquina onde está o aplicativo instalado ou http://127.0.0.1:8080
 
+---
+
 ## 🚧 Status: Beta v0.8
 
 Funcionalidades disponíveis:
@@ -60,10 +62,6 @@ Funcionalidades pendentes:
 - [ ] Lixeira e exclusão de arquivos
 - [ ] Registro de novos usuários
 - [ ] Sistema de login seguro
-
-## 📸 Capturas de tela
-
-> 
 
 ---
 
@@ -98,6 +96,30 @@ python app.py
 
 - Usuário: `rx4n`  
 - Senha: `rx4n`
+
+---
+
+## 📸 Capturas de tela
+
+### Tela de Login
+![Tela de Login](1_login.png)
+
+### Interface da Homepage
+![Interface da Homepage](2_homepage.png)
+
+### Categoria Video
+![Categoria Video](3_video.png)
+
+### Subcategoria movie
+![Subcategoria movie](4_movie.png)
+
+### Categoria Image
+![Categoria Image](5_image.png)
+
+### Subcategoria photo
+![Subcategoria photo](6_photo.png)
+
+---
 
 ## 🧾 Licença
 
