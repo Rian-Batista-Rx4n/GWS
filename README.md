@@ -77,7 +77,7 @@ Funcionalidades pendentes:
 # 🚀 Como executar / instalar
 
 ## Clone o repositório
-git clone https://github.com/SEU_USUARIO/central-arquivos-web.git
+git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem
 cd central-arquivos-web
 
 ## (Opcional) Crie um ambiente virtual
