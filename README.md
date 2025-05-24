@@ -105,19 +105,19 @@ python app.py
 ![Tela de Login](static/images/1_login.png)
 
 ### Interface da Homepage
-![Interface da Homepage](2_homepage.png)
+![Interface da Homepage](static/images/2_homepage.png)
 
 ### Categoria Video
-![Categoria Video](3_video.png)
+![Categoria Video](static/images/3_video.png)
 
 ### Subcategoria movie
-![Subcategoria movie](4_movie.png)
+![Subcategoria movie](static/images/4_movie.png)
 
 ### Categoria Image
-![Categoria Image](5_image.png)
+![Categoria Image](static/images/5_image.png)
 
 ### Subcategoria photo
-![Subcategoria photo](6_photo.png)
+![Subcategoria photo](static/images/6_photo.png)
 
 ---
 
