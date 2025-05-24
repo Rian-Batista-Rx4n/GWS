@@ -102,7 +102,7 @@ python app.py
 ## 📸 Capturas de tela
 
 ### Tela de Login
-![Tela de Login](1_login.png)
+![Tela de Login](static/images/1_login.png)
 
 ### Interface da Homepage
 ![Interface da Homepage](2_homepage.png)
