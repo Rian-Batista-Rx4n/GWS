@@ -76,20 +76,20 @@ Funcionalidades pendentes:
 
 ---
 
-## 🚀 Como executar / instalar
+# 🚀 Como executar / instalar
 
-# Clone o repositório
+## Clone o repositório
 git clone https://github.com/SEU_USUARIO/central-arquivos-web.git
 cd central-arquivos-web
 
-# (Opcional) Crie um ambiente virtual
+## (Opcional) Crie um ambiente virtual
 python3 -m venv venv
 source venv/bin/activate
 
-# Instale as dependências
+## Instale as dependências
 pip install -r requirements.txt
 
-# Execute o servidor
+## Execute o servidor
 python app.py
 
 ---
