@@ -78,7 +78,8 @@ Funcionalidades pendentes:
 
 ## Clone o repositório
 git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem
-cd central-arquivos-web
+
+cd web-files-manager-graywolfsystem
 
 ## (Opcional) Crie um ambiente virtual
 python3 -m venv venv
