@@ -35,7 +35,7 @@ Principais recursos:
 - Usar hardware antigo como servidor local
 - Interface simples e fácil de usar
 
-# COmo usar
+# Como usar
 
 - Você instalar o aplicativo e executa em alguem aparelho com sistema Linux
     - Poder ser servidor
