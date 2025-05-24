@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+#topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2em;
+    height: 3.5em;
+    background-color: rgb(46, 46, 46);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.256);
+}
+
+h1 {
+    margin: auto;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#roda_pe {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222; /* você pode mudar a cor */
+    color: white;           /* cor do texto */
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;          /* garante que fique por cima de outros elementos */
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.video-card {
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.video-title {
+    margin-top: 10px;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+#backButton {
+    border-radius: 10px 10px 10px 10px;
+    width: 100%;
+    height: 4em;
+}

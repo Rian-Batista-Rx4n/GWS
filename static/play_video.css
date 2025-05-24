@@ -1,0 +1,58 @@
+body, html {
+    background-color: rgb(20, 20, 20);
+    color: white;
+    margin: auto;
+    height: 100%;
+}
+
+#topo {
+    width: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2em;
+    height: 3.5em;
+    background-color: rgb(46, 46, 46);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.256);
+}
+
+h1 {
+    margin: auto;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#roda_pe {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222; /* você pode mudar a cor */
+    color: white;           /* cor do texto */
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;          /* garante que fique por cima de outros elementos */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#tela {
+    margin: auto;
+    margin-top: 1%;
+    width: 80%;
+    height: 30em;
+    border-radius: 1%;
+    background-color: rgb(46, 46, 46);
+    box-shadow: 5px 5px 5px black;
+}
+
+#botoes_caixa {
+    position: static;
+    margin: auto;
+    width: 80%;
+    border-radius: 1%;
+    height: 3em;
+    margin: auto;
+    margin-top: 1%;
+}

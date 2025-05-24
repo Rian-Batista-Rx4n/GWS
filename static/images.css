@@ -1,0 +1,86 @@
+body {
+    font-family: Arial;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    text-align: center;
+    margin: auto;
+}
+#topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2em;
+    height: 3.5em;
+    background-color: rgb(46, 46, 46);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.256);
+}
+
+h1 {
+    margin: auto;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+#roda_pe {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222; /* você pode mudar a cor */
+    color: white;           /* cor do texto */
+    text-align: center;
+    padding: 10px 0;
+    z-index: 998;          /* garante que fique por cima de outros elementos */
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.miniatura {
+    width: 10%;
+    height: 10%;
+    cursor: pointer;
+    border: 2px solid #444;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.miniatura:hover {
+    transform: scale(1.05);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.modal-conteudo {
+    margin: 5% auto;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.fechar {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
