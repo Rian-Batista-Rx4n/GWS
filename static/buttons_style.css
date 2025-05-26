@@ -1,0 +1,47 @@
+#botoes-caixa {
+    width: 80%;
+    margin: auto;
+    margin-top: 1%;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+}
+
+form {
+    display: flex;
+}
+
+button {
+    width: 160px;
+    height: 160px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3em;
+    border: none;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.521);
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+.text_button {
+    position: static;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-weight: bold;
+    color: black;
+    font-size: 1.2em;
+}
+
+.icon_button {
+    width: 65%;
+}

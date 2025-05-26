@@ -43,16 +43,22 @@ h1 {
     width: 80%;
     margin: auto;
     margin-top: 1%;
-    text-align: center;
-    flex: 1;
-    padding-bottom: 1em;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
 }
+
+form {
+    display: flex;
+}
+
 button {
-    margin: 0.5em;
-    width: 10em;
-    height: 10em;
+    width: 160px;
+    height: 160px;
     background-color: white;
-    border-radius: 10%;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,18 +67,19 @@ button {
     border: none;
     cursor: pointer;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.521);
+    transition: transform 0.2s;
 }
 
-form {
-    text-align: center;
-    display: inline-block;
+button:hover {
+    transform: scale(1.05);
 }
+
 
 .text_button {
     position: static;
     margin: 0;
     padding: 0;
-    font-family: Arial;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: black;
     font-size: 1.2em;

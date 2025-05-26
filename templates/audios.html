@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Áudios - {{ subcategoria }}</title>
+    <link rel="stylesheet" href="../static/backButton_style.css">
+    <link rel="stylesheet" href="../static/base_style.css">
+    <link rel="stylesheet" href="../static/buttons_style.css">
     <link rel="stylesheet" href="../static/audios.css">
 </head>
 <body>
@@ -21,7 +24,12 @@
         {% endfor %}
     </ul>
 
-    <a href="/graywolf-audio">Voltar</a>
+    <div id="botoes-caixa">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit">Voltar para HomePage.</button>
+        </form>
+    </div>
+
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>   
