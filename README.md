@@ -1,4 +1,4 @@
-# 🐺 Gray Wolf System (GWS) – v0.8 Beta
+# 🐺 Gray Wolf System (GWS) – v0.8.2 Beta
 Sistema pessoal de gerenciamento de arquivos via Flask, com player para vídeos, áudios, imagens e outros… tudo acessado via interface Web responsiva.
 
 
