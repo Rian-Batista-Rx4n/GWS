@@ -97,3 +97,7 @@ git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem
 cd web-files-manager-graywolfsystem
 pip install -r requirements.txt
 python3 main.py
+```
+---
+## 🧾 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
