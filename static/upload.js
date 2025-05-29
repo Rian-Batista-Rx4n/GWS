@@ -44,7 +44,9 @@ form.addEventListener("submit", function (e) {
     }
 
     const formData = new FormData();
-    formData.append("file", fileInput.files[0]);
+    for (let i = 0; i < fileInput.files.length; i++) {
+        formData.append("file", fileInput.files[i]);
+    }
     formData.append("chooseFile", chooseFile);
     formData.append("subCategory", subCategory);
 

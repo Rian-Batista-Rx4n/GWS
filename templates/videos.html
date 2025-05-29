@@ -16,19 +16,21 @@
     <div class="video-grid">
         {% for video in arquivos %}
         <div class="video-card">
-            <video width="320" height="180" controls>
-                <source src="{{ url_for('servir_video', subcategoria=subcategoria, nome_arquivo=video) }}" type="video/mp4">
-                Seu navegador não suporta o elemento de vídeo.
-            </video>
-            <p class="video-title">{{ video }}</p>
+            <button class="load-video-btn" data-src="{{ url_for('servir_video', subcategoria=subcategoria, nome_arquivo=video) }}">
+                ▶ Assistir: {{ video }}
+            </button>
+            <div class="video-container"></div>
         </div>
         {% endfor %}
     </div>
+
     <form action="/graywolf-back" method="GET">
         <button id="backButton" type="submit">Voltar para HomePage.</button>
     </form>
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
-    </div>  
+    </div>
+
+    <script src="../static/videos.js"></script>
 </body>
 </html>

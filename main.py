@@ -97,33 +97,32 @@ def upload_file():
         flash('Nenhum arquivo selecionado')
         return redirect(request.referrer)
 
-    file = request.files['file']
+    files = request.files.getlist("file")
     main_category = request.form.get("chooseFile")
     sub_category = request.form.get("subCategory")
 
-    if not file or not main_category or not sub_category:
+    if not files or not main_category or not sub_category:
         flash("Todos os campos são obrigatórios.")
-        return redirect(request.referrer)
-
-    if file.filename == '':
-        flash('Nome de arquivo vazio')
-        return redirect(request.referrer)
-
-    if not allowed_file(file.filename):
-        flash('Tipo de arquivo não permitido')
         return redirect(request.referrer)
 
     folder_path = os.path.join("GWFiles", main_category, sub_category)
     os.makedirs(folder_path, exist_ok=True)
 
     agora = datetime.now()
-    timestamp = agora.strftime("%Y%m%d_%H%M%S")
-    filename = f"{timestamp}_{file.filename}"
-    filepath = os.path.join(folder_path, filename)
-    file.save(filepath)
+    for file in files:
+        if file.filename == '':
+            continue  # Ignora arquivos sem nome
 
-    print(f"{agora.strftime('%d/%m/%Y %H:%M:%S')} - Arquivo {file.filename} salvo em {filepath}")
-    flash('Arquivo enviado com sucesso!')
+        if not allowed_file(file.filename):
+            continue  # Ignora arquivos com extensões inválidas
+
+        timestamp = agora.strftime("%Y%m%d_%H%M%S")
+        filename = f"{file.filename}"
+        filepath = os.path.join(folder_path, filename)
+        file.save(filepath)
+        print(f"{agora.strftime('%d/%m/%Y %H:%M:%S')} - Arquivo {file.filename} salvo em {filepath}")
+
+    flash('Arquivos enviados com sucesso!')
     return redirect("/graywolf-upload")
 
 @app.route('/graywolf-uploadFiles')
