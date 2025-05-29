@@ -82,19 +82,20 @@ Funcionalidades pendentes:
 # 🚀 Como executar / instalar
 
 ## Clone o repositório
-git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem
 
-cd web-files-manager-graywolfsystem
+`git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem`
+
+`cd web-files-manager-graywolfsystem`
 
 ## (Opcional) Crie um ambiente virtual
-python3 -m venv venv
-source venv/bin/activate
+`python3 -m venv venv`
+`source venv/bin/activate`
 
 ## Instale as dependências
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ## Execute o servidor
-python app.py
+`python app.py`
 
 ---
 
