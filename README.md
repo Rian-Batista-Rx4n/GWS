@@ -36,6 +36,20 @@ Key features:
 - Reuse old hardware as a local server
 - Keep a simple and user-friendly interface
 ---
+## 📸 Screenshots
+
+### Login (old picture)
+![Tela de Login](static/images/1_login.png)
+
+### Homepage (old picture)
+![Interface da Homepage](static/images/2_homepage.png)
+
+### Movie (old picture)
+![Subcategoria movie](static/images/4_movie.png)
+
+### Photo (old picture)
+![Subcategoria photo](static/images/6_photo.png)
+---
 ## 🚀 How to Use
 
 1. Install and run the application on a Linux-based system:
