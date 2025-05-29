@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Galeria de Imagens</title>
+    <title>GWS - Images</title>
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
-    <h1>Galeria - {{ subcategoria }}</h1>
+    <h1>{{ subcategoria }}</h1>
 
     <div class="galeria">
         {% for imagem in imagens %}
@@ -24,8 +24,8 @@
     </div>
 
     <div id="botoes-caixa">
-        <form action="/graywolf-back" method="GET">
-            <button id="backButton" type="submit">Voltar para HomePage.</button>
+        <form action="/graywolf-image" method="GET">
+            <button id="backButton" type="submit">Back to Categories.</button>
         </form>
     </div>
 

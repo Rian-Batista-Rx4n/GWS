@@ -1,11 +1,22 @@
-from flask import Flask, render_template, request, redirect, flash, session, send_from_directory
+from flask import Flask, render_template, request, redirect, flash, session, send_from_directory, url_for
 from datetime import datetime
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DOCUMENTS_DIR = os.path.join(BASE_DIR, "GWFiles", "document")
+
+
+
 UPLOAD_FOLDER = 'GWUpload'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 
-                      'zip', 'rar', 'docs', 'mp4', 'mp3', '7zip', 
-                      'pptx', 'xlsx', 'py'}
+ALLOWED_EXTENSIONS = {
+    'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp', 'ico',
+    'zip', 'rar', '7z', 'tar', 'gz', 'xz',
+    'doc', 'docx', 'odt', 'xls', 'xlsx', 'ods', 'ppt', 'pptx', 'csv', 'rtf',
+    'mp4', 'mkv', 'avi', 'mov', 'webm',
+    'mp3', 'wav', 'ogg', 'flac', 'm4a',
+    'py', 'js', 'html', 'css', 'json', 'xml', 'sql', 'md', 'sh'
+}
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -218,6 +229,51 @@ def exibir_imagens_por_subcategoria(subcategoria):
 def servir_imagem(subcategoria, nome_arquivo):
     caminho = os.path.join("GWFiles", "image", subcategoria)
     return send_from_directory(caminho, nome_arquivo)
+
+# ================================= VER DOCUMENTS =================================
+@app.route("/graywolf-<categoria>", methods=["GET"])
+def exibir_documentos_categoria(categoria):
+    categoria_map = {
+        "excel": "excel",
+        "pdf": "pdf",
+        "powerpoint": "powerpoint",
+        "word": "word",
+        "document-no-category": "document_no_category"
+    }
+
+    if categoria in categoria_map:
+        pasta = os.path.join(BASE_DIR, "GWFiles", "document", categoria_map[categoria])
+        arquivos = [
+            arquivo for arquivo in os.listdir(pasta)
+            if os.path.isfile(os.path.join(pasta, arquivo))
+        ]
+        return render_template(
+            "documents.html",                # ✅ o template correto
+            arquivos=arquivos,
+            categoria=categoria,
+            categoria_titulo=categoria_map[categoria]
+        )
+    else:
+        return redirect(url_for('document_page'))
+
+@app.route("/document/<categoria>/<nome_arquivo>")
+def download_documento(categoria, nome_arquivo):
+    categoria_map = {
+        "excel": "excel",
+        "pdf": "pdf",
+        "powerpoint": "powerpoint",
+        "word": "word",
+        "document-no-category": "document_no_category"
+    }
+
+    pasta = categoria_map.get(categoria)
+    if not pasta:
+        flash("Categoria inválida.")
+        return redirect("/graywolf-document")
+
+    caminho = os.path.join("GWFiles", "document", pasta)
+    return send_from_directory(caminho, nome_arquivo, as_attachment=True)
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8080)

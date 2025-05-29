@@ -1,4 +1,4 @@
-# 🐺 Gray Wolf System (GWS) – v0.8.2 Beta
+# 🐺 Gray Wolf System (GWS) – v0.9.0 Beta
 A personal file management system built with Flask, featuring audio, video, image players and more – all accessible through a responsive web interface.
 ---
 ## 🐺 Gray Wolf System
@@ -8,6 +8,7 @@ A web-based file manager built with **Flask (Python)**, ideal for personal use o
 - Embedded audio player
 - Embedded video player
 - Embedded image viewer
+- Embedded text reader
 - Recent upload preview
 - Category-based file navigation
 - Responsive interface with HTML, CSS, and JS
@@ -63,7 +64,7 @@ Key features:
 
 4. Access via device IP or: `http://127.0.0.1:8080`
 ---
-## 🚧 Status: Beta v0.8.2
+## 🚧 Status: Beta v0.9.0
 
 ✅ Available Features:
 - [x] File upload and download
@@ -71,6 +72,7 @@ Key features:
 - [x] Image viewer
 - [x] Audio player
 - [x] Recently uploaded file list
+- [x] Show and Download Documents
 
 🛠️ Planned Features:
 - [ ] Real-time chat
@@ -79,7 +81,7 @@ Key features:
 - [ ] User registration
 - [ ] Secure login system
 - [ ] Read and edit .txt files
-- [ ] Show and Download Documents
+
 ---
 ## ⚙️ Technologies Used
 
@@ -90,7 +92,7 @@ Key features:
 ---
 # 🚀 Installation Guide
 
-## Clone the repository
+## Cloning the repository
 
 ```bash
 git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem
@@ -98,6 +100,10 @@ cd web-files-manager-graywolfsystem
 pip install -r requirements.txt
 python3 main.py
 ```
+### Instaling by install.sh
+## 🔽 Download Installers
+- [🇺🇸 install_EN.sh](https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem/raw/main/install_EN.sh) — Installer script in English
+- [🇧🇷 install_PT.sh](https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem/raw/main/install_PT.sh) — Script de instalação em português  
 
 ## 🔐 Default Login (temporary)
 Username: ´rx4n´

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
+    <link rel="stylesheet" href="../static/uploads.css">
     <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
     <title>GWS - Uploads</title>
 </head>
@@ -15,7 +16,7 @@
         {% for arquivo in arquivos %}
             <div class="arquivo">
                 <span>{{ arquivo }}</span>
-                <a href="{{ url_for('download_arquivo', nome_arquivo=arquivo) }}">Baixar</a>
+                <a href="{{ url_for('download_arquivo', nome_arquivo=arquivo) }}">Download</a>
             </div>
         {% endfor %}
     {% else %}
@@ -23,7 +24,7 @@
     {% endif %}
     <div id="botoes-caixa">
         <form action="/graywolf-back" method="GET">
-            <button id="backButton" type="submit">Voltar para HomePage.</button>
+            <button id="backButton" type="submit">Back to HomePage.</button>
         </form>
     </div>
     <div id="roda_pe">

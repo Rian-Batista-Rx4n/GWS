@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,31 +12,31 @@
 
     <form action="/graywolf-upload-file" method="POST" enctype="multipart/form-data">
         <div id="upload-caixa">
-            <LABEl>Escolha onde salvar o arquivo:</LABEl>
+            <h2>Choose where to save the file:</h2>
             <select name="chooseFile" id="chooseFile" required>
-                <option value="">Escolha a categoria</option>
+                <option value="">Choose the category</option>
                 <option value="audio">Audio</option>
-                <option value="documents">Documentos</option>
-                <option value="image">Imagens</option>
-                <option value="text">Texto</option>
-                <option value="video">Videos</option>
-                <option value="geral">Geral</option>
+                <option value="document">Document</option>
+                <option value="image">Image</option>
+                <option value="text">Text</option>
+                <option value="video">Video</option>
+                <option value="geral">Others</option>
             </select>
             <br>
-            <label>Subcategoria:</label>
+            <h2>Subcategory:</h2>
             <select name="subCategory" id="subCategory" required>
-                <option value="">Selecione uma subcategoria</option>
+                <option value="">Select a subcategory</option>
             </select>
             <br>
             <input type="file" name="file" id="file" multiple required>
             <progress id="uploadProgress" value="0" max="100" style="width: 100%; display: none;"></progress>
             <p id="uploadStatus" style="text-align:center; font-weight: bold;"></p>
-            <button type="submit">Enviar</button>
+            <button type="submit">Upload</button>
         </div>
     </form>
     <div id="botoes-caixa">
         <form action="/graywolf-back" method="GET">
-            <button id="backButton" type="submit">Voltar para HomePage.</button>
+            <button id="backButton" type="submit">Back to HomePage.</button>
         </form>
     </div>
     <div id="roda_pe">

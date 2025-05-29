@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Áudios - {{ subcategoria }}</title>
+    <title>GWS - Audios </title>
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
-    <h1>Áudios - {{ subcategoria }}</h1>
+    <h1>{{ subcategoria }}</h1>
 
     <ul>
         {% for arquivo in arquivos %}
@@ -18,15 +18,15 @@
                 <p>{{ arquivo }}</p>
                 <audio controls>
                     <source src="{{ url_for('servir_audio', subcategoria=subcategoria, nome_arquivo=arquivo) }}" type="audio/mpeg">
-                    Seu navegador não suporta o elemento de áudio.
+                    Your browser does not support the audio element.
                 </audio>
             </li>
         {% endfor %}
     </ul>
 
     <div id="botoes-caixa">
-        <form action="/graywolf-back" method="GET">
-            <button id="backButton" type="submit">Voltar para HomePage.</button>
+        <form action="/graywolf-audio" method="GET">
+            <button id="backButton" type="submit">Back to Categories.</button>
         </form>
     </div>
 

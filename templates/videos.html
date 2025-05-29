@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gray Wolf - Vídeos {{ subcategoria }}</title>
+    <title>GWS - Videos</title>
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
@@ -11,21 +11,21 @@
 </head>
 <body>
     <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
-    <h1>Categoria: {{ subcategoria.capitalize() }}</h1>
+    <h1>{{ subcategoria.capitalize() }}</h1>
 
     <div class="video-grid">
         {% for video in arquivos %}
         <div class="video-card">
             <button class="load-video-btn" data-src="{{ url_for('servir_video', subcategoria=subcategoria, nome_arquivo=video) }}">
-                ▶ Assistir: {{ video }}
+                ▶ {{ video }}
             </button>
             <div class="video-container"></div>
         </div>
         {% endfor %}
     </div>
 
-    <form action="/graywolf-back" method="GET">
-        <button id="backButton" type="submit">Voltar para HomePage.</button>
+    <form action="/graywolf-video" method="GET">
+        <button id="backButton" type="submit">Back to Categories.</button>
     </form>
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>

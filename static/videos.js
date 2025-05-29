@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
             container.innerHTML = `
                 <video width="320" height="180" controls autoplay>
                     <source src="${src}" type="video/mp4">
-                    Seu navegador não suporta o vídeo.
+                    Your browser does not support the video.
                 </video>
             `;
 

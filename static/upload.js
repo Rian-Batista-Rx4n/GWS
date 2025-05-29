@@ -1,6 +1,6 @@
 const subCategories = {
     audio: ["audio_no_category", "music", "podcast"],
-    documents: ["documents_no_category", "excel", "powerpoint", "word", "pdf"],
+    document: ["document_no_category", "excel", "powerpoint", "word", "pdf"],
     image: ["image_no_category", "photo", "screenshots"],
     text: ["text_no_category", "list", "note", "script"],
     video: ["video_no_category", "serie", "movie"],
