@@ -98,6 +98,10 @@ cd web-files-manager-graywolfsystem
 pip install -r requirements.txt
 python3 main.py
 ```
+
+## 🔐 Default Login (temporary)
+Username: ´rx4n´
+Password: ´rx4n´
 ---
 ## 🧾 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
