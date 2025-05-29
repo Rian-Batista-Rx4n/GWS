@@ -13,6 +13,11 @@ Sistema de gerenciamento de arquivos web feito com **Flask (Python)**, ideal par
 - Visualizaçaõ de arquivos de sua categoria
 - Interface responsiva com HTML, CSS e JS
 
+![Last commit](https://img.shields.io/github/last-commit/Rian-Batista-Rx4n/web-files-manager-graywolfsystem)
+![Repo size](https://img.shields.io/github/repo-size/Rian-Batista-Rx4n/web-files-manager-graywolfsystem)
+![License](https://img.shields.io/github/license/Rian-Batista-Rx4n/web-files-manager-graywolfsystem)
+![Top Language](https://img.shields.io/github/languages/top/Rian-Batista-Rx4n/web-files-manager-graywolfsystem)
+
 ---
 
 ## 📁 Sobre o projeto
