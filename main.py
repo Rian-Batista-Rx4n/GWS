@@ -274,6 +274,29 @@ def download_documento(categoria, nome_arquivo):
     caminho = os.path.join("GWFiles", "document", pasta)
     return send_from_directory(caminho, nome_arquivo, as_attachment=True)
 
+# ==================== CRIAR PASTAS NESCESSARIAS =====================
+@app.before_first_request
+def criar_pastas_necessarias():
+    estrutura = {
+        "video": ["movie", "serie", "video_no_category"],
+        "image": ["photo", "screenshot", "image_no_category"],
+        "audio": ["music", "podcast", "audio_no_category"],
+        "document": ["excel", "pdf", "powerpoint", "word", "document_no_category"],
+        "text": ["list", "note", "script", "text_no_category"],
+        "trash": [],
+        "geral": ["sem_categoria"]
+    }
+
+    for categoria, subcategorias in estrutura.items():
+        if subcategorias:
+            for sub in subcategorias:
+                caminho = os.path.join("GWFiles", categoria, sub)
+                os.makedirs(caminho, exist_ok=True)
+        else:
+            caminho = os.path.join("GWFiles", categoria)
+            os.makedirs(caminho, exist_ok=True)
+
+    print("✅ Todas as pastas necessárias foram verificadas/criadas.")
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8080)
