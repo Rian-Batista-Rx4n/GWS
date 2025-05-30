@@ -5,7 +5,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCUMENTS_DIR = os.path.join(BASE_DIR, "GWFiles", "document")
 
-
+pastas_criadas = False
 
 UPLOAD_FOLDER = 'GWUpload'
 ALLOWED_EXTENSIONS = {
@@ -275,7 +275,7 @@ def download_documento(categoria, nome_arquivo):
     return send_from_directory(caminho, nome_arquivo, as_attachment=True)
 
 # ==================== CRIAR PASTAS NESCESSARIAS =====================
-@app.before_first_request
+@app.before_request
 def criar_pastas_necessarias():
     estrutura = {
         "video": ["movie", "serie", "video_no_category"],
@@ -297,6 +297,7 @@ def criar_pastas_necessarias():
             os.makedirs(caminho, exist_ok=True)
 
     print("✅ Todas as pastas necessárias foram verificadas/criadas.")
+    pastas_criadas = True
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8080)
