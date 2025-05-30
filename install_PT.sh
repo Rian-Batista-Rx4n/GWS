@@ -67,6 +67,8 @@ install_gws() {
     sudo mkdir -p "$GWS_PATH"
     sudo git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem "$GWS_PATH"
 
+    sudo chown -R "$USER":"$USER" "$GWS_PATH"
+
     echo "Criando atalho para execução rápida..."
     echo -e "#!/bin/bash\ncd $GWS_PATH\npython3 main.py" | sudo tee /usr/local/bin/gws-start > /dev/null
     sudo chmod +x /usr/local/bin/gws-start
