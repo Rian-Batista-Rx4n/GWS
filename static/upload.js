@@ -49,6 +49,11 @@ form.addEventListener("submit", function (e) {
     }
     formData.append("chooseFile", chooseFile);
     formData.append("subCategory", subCategory);
+    const isPublic = document.querySelector('input[name="public"]').checked;
+    if (isPublic) {
+        formData.append("public", "yes");
+    }
+
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/graywolf-upload-file", true);

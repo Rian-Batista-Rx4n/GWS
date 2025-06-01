@@ -2,6 +2,18 @@
 
 All major changes to this project will be documented here.
 
+## [0.9.1] - 2025-06-01
+### Added
+- User creation system with role assignment (**Admin** or **Regular User**)
+- Custom **404 - Not Found** error page
+- Registered users are now stored in a **JSON** database
+- File visibility control: only the **owner** of the file or if it's marked as **public** can view it
+
+### Changed
+- Minor **CSS** fixes and visual adjustments
+
+---
+
 ## [0.9.0] - 2025-05-29
 ### Added
 - Document viewer and download support (PDF, Word, Excel, PowerPoint)
