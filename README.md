@@ -1,4 +1,4 @@
-# 🐺 Gray Wolf System (GWS) – v0.9.0 Beta
+# 🐺 Gray Wolf System (GWS) – v0.9.1 Beta
 A personal file management system built with Flask, featuring audio, video, image players and more – all accessible through a responsive web interface.
 ---
 ## 🐺 Gray Wolf System
@@ -33,23 +33,23 @@ Key features:
 
 - Access your files remotely via browser and local IP
 - Organize files by type and category
-- Save space on mobile devices
+- Free up storage space on mobile by offloading files to your server
 - Reuse old hardware as a local server
 - Keep a simple and user-friendly interface
 ---
 ## 📸 Screenshots
 
 ### Login (old picture)
-![Tela de Login](static/images/1_login.png)
+![Login](static/images/1_login.png)
 
 ### Homepage (old picture)
-![Interface da Homepage](static/images/2_homepage.png)
+![Homepage](static/images/2_homepage.png)
 
 ### Movie (old picture)
-![Subcategoria movie](static/images/4_movie.png)
+![Movie](static/images/4_movie.png)
 
 ### Photo (old picture)
-![Subcategoria photo](static/images/6_photo.png)
+![Photo](static/images/6_photo.png)
 ---
 ## 🚀 How to Use
 
@@ -64,7 +64,7 @@ Key features:
 
 4. Access via device IP or: `http://127.0.0.1:8080`
 ---
-## 🚧 Status: Beta v0.9.0
+## 🚧 Status: Beta v0.9.1
 
 ✅ Available Features:
 - [x] File upload and download
@@ -73,12 +73,13 @@ Key features:
 - [x] Audio player
 - [x] Recently uploaded file list
 - [x] Show and Download Documents
+- [x] Show files only if public or owned by the user
+- [x] User registration
 
 🛠️ Planned Features:
 - [ ] Real-time chat
 - [ ] Web Terminal (remote system access)
 - [ ] Trash bin and file deletion
-- [ ] User registration
 - [ ] Secure login system
 - [ ] Read and edit .txt files
 
@@ -106,8 +107,8 @@ python3 main.py
 - [🇧🇷 install_PT.sh](https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem/raw/main/install_PT.sh) — Script de instalação em português  
 
 ## 🔐 Default Login (temporary)
-Username: ´rx4n´
-Password: ´rx4n´
+Username: 'rx4n'
+Password: 'rx4n'
 ---
 ## 🧾 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
