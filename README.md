@@ -1,17 +1,15 @@
-# 🐺 Gray Wolf System (GWS) – v0.9.1 Beta
+# 🐺 Gray Wolf System (GWS) – v0.9.2 Beta
 A personal file management system built with Flask, featuring audio, video, image players and more – all accessible through a responsive web interface.
 ---
-## 🐺 Gray Wolf System
+## 🐺 Gray Wolf System - Key Features:
 
-A web-based file manager built with **Flask (Python)**, ideal for personal use or local networks. Features include:
+## 🐺 **Gray Wolf System (GWS)** 
+is a lightweight web application built with **Flask (Python)**, designed to turn any Linux device (old PC, server, or even a Termux-based Android phone) into a local file server, include:
 - File upload and download
-- Embedded audio player
-- Embedded video player
-- Embedded image viewer
-- Embedded text reader
-- Recent upload preview
+- Integrated viewers for images, videos, audio, and text
 - Category-based file navigation
-- Responsive interface with HTML, CSS, and JS
+- Recent upload preview
+- Responsive interface (HTML + CSS + JS)
 
 ![Last commit](https://img.shields.io/github/last-commit/Rian-Batista-Rx4n/web-files-manager-graywolfsystem)
 ![Repo size](https://img.shields.io/github/repo-size/Rian-Batista-Rx4n/web-files-manager-graywolfsystem)
@@ -22,20 +20,13 @@ A web-based file manager built with **Flask (Python)**, ideal for personal use o
 ## 📁 About the Project
 
 **Gray Wolf System (GWS)** is a lightweight web application built with Flask, designed to turn any Linux device (old PC, server, or even a Termux-based Android phone) into a local file server.
-
-Key features:
-- File upload and download
-- Built-in media players (video, audio, image)
-- Category-based file visualization
-- Responsive and modern interface (HTML + CSS + JS)
----
 ## 🎯 Project Goals
 
 - Access your files remotely via browser and local IP
 - Organize files by type and category
-- Free up storage space on mobile by offloading files to your server
-- Reuse old hardware as a local server
-- Keep a simple and user-friendly interface
+- Reuse old devices as personal servers
+- Free up mobile storage by offloading files
+- Keep the interface clean, lightweight, and user-friendly
 ---
 ## 📸 Screenshots
 
@@ -64,7 +55,7 @@ Key features:
 
 4. Access via device IP or: `http://127.0.0.1:8080`
 ---
-## 🚧 Status: Beta v0.9.1
+## 🚧 Status: Beta v0.9.2
 
 ✅ Available Features:
 - [x] File upload and download
@@ -75,6 +66,7 @@ Key features:
 - [x] Show and Download Documents
 - [x] Show files only if public or owned by the user
 - [x] User registration
+- [x] System log
 
 🛠️ Planned Features:
 - [ ] Real-time chat

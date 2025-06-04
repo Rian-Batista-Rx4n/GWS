@@ -2,6 +2,14 @@
 
 All major changes to this project will be documented here.
 
+## [0.9.2] - 2025-06-04
+### Added
+- **Action Logging System**: 
+  - Logs user login attempts (success/failure)
+  - Logs file uploads and visibility settings
+  - Logs error access attempts and permission issues
+  - Stored as plaintext in `/GWFiles/*GrayWolf.log`
+
 ## [0.9.1] - 2025-06-01
 ### Added
 - User creation system with role assignment (**Admin** or **Regular User**)
