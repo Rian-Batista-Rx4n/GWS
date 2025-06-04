@@ -70,7 +70,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', os.urandom(24))
 
 if not os.path.exists(UPLOAD_FOLDER):
-    registrar_log("PATH", session.get("usuario_logado", "unknow"), "Upload Path Created")
+    registrar_log("PATH", "SYSTEM", "Upload Path Created")
     os.makedirs(UPLOAD_FOLDER)
 
 def allowed_file(filename):
