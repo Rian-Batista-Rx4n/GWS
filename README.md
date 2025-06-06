@@ -2,7 +2,7 @@
 A personal file management system built with Flask, featuring audio, video, image players and more – all accessible through a responsive web interface.
 ---
 
-## 🐺 **Gray Wolf System ** 
+## 🐺 **Gray Wolf System** 
 is a lightweight web application built with **Flask (Python)**, designed to turn any Linux device (old PC, server, or even a Termux-based Android phone) into a local file server, include:
 - File upload and download
 - Integrated viewers for images, videos, audio, and text
