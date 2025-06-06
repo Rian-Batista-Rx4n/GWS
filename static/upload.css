@@ -44,3 +44,8 @@ select {
     width: 50%;
     height: 4em;
 }
+
+#publicButton {
+    width: 30px;
+    height: 30px;
+}

@@ -65,7 +65,7 @@ install_packages() {
 install_gws() {
     echo "⬇️ Cloning GrayWolfSystem to $GWS_PATH..."
     sudo mkdir -p "$GWS_PATH"
-    sudo git clone https://github.com/Rian-Batista-Rx4n/web-files-manager-graywolfsystem "$GWS_PATH"
+    sudo git clone https://github.com/Rian-Batista-Rx4n/GWS "$GWS_PATH"
 
     sudo chown -R "$USER":"$USER" "$GWS_PATH"
 

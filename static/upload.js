@@ -4,7 +4,7 @@ const subCategories = {
     image: ["image_no_category", "photo", "screenshots"],
     text: ["text_no_category", "list", "note", "script"],
     video: ["video_no_category", "serie", "movie"],
-    geral: ["sem_subcategoria"]
+    geral: ["no_subcategory"]
 };
 
 document.getElementById("chooseFile").addEventListener("change", function () {
@@ -22,7 +22,7 @@ document.getElementById("chooseFile").addEventListener("change", function () {
     } else {
         const opt = document.createElement("option");
         opt.value = "";
-        opt.text = "Nenhuma subcategoria";
+        opt.text = "No Subcategory";
         subSelect.appendChild(opt);
     }
 });
@@ -39,7 +39,7 @@ form.addEventListener("submit", function (e) {
     const status = document.getElementById("uploadStatus");
 
     if (!fileInput.files.length) {
-        alert("Selecione um arquivo.");
+        alert("Select a file...");
         return;
     }
 
@@ -64,21 +64,21 @@ form.addEventListener("submit", function (e) {
             const percent = Math.round((event.loaded / event.total) * 100);
             progress.style.display = "block";
             progress.value = percent;
-            status.textContent = `Enviando: ${percent}%`;
+            status.textContent = `Uploading...: ${percent}%`;
         }
     };
 
     // Evento de fim
     xhr.onload = function () {
         if (xhr.status === 200) {
-            status.textContent = "Upload concluído com sucesso!";
+            status.textContent = "Upload Complete!";
         } else {
-            status.textContent = "Erro no upload.";
+            status.textContent = "Upload Failed!";
         }
     };
 
     xhr.onerror = function () {
-        status.textContent = "Erro de conexão ao enviar.";
+        status.textContent = "ERROR CONNECTION!.";
     };
 
     xhr.send(formData);

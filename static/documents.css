@@ -4,10 +4,16 @@
     border-radius: 10px 10px 10px 10px;
     padding: 1%;
     width: 80%;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
 }
 
 #lista-arquivos li:hover {
     background-color: #535353;
+    border-style: solid;
+    border-color: rgba(102, 214, 255, 0.83);
+    border-width: 2px;
 }
 
 .link-download {
@@ -20,4 +26,26 @@
 
 .link-download:hover {
     text-decoration: underline;
+}
+.botao-delete {
+    position: relative;
+    top: 100%;
+    display: flex;
+    background: rgb(255, 0, 0);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    padding: 2px;
+    cursor: pointer;
+    margin-top: 0.5em;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 10%;
+    width: 100px;
+    height: 100px;
+    margin-top: 1%;
+}
+
+#trash_button {
+    width: 80%;
 }

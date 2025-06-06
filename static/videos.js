@@ -19,5 +19,16 @@ document.addEventListener("DOMContentLoaded", () => {
             button.remove(); // Remove o botão após clicar (opcional)
         });
     });
-});
 
+    // Correção: adicionar handler para os forms de delete
+    const deleteForms = document.querySelectorAll(".delete-form");
+
+    deleteForms.forEach(form => {
+        form.addEventListener("submit", function (e) {
+            const filePath = form.getAttribute("data-file-path");
+            const hiddenInput = form.querySelector("input[name='file_path']");
+            hiddenInput.value = filePath;
+            // opcional: console.log("Deletando:", filePath);
+        });
+    });
+});

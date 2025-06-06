@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
     <title>GWS - Videos</title>
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
@@ -19,8 +20,17 @@
             <button class="load-video-btn" data-src="{{ url_for('servir_video', subcategoria=subcategoria, nome_arquivo=video) }}">
                 ▶ {{ video }}
             </button>
+
+            <!-- container onde o vídeo vai aparecer -->
             <div class="video-container"></div>
+
+            <!-- form de delete -->
+            <form method="POST" action="/graywolf-delete-file" class="delete-form" data-file-path="GWFiles/video/{{ subcategoria }}/{{ video }}">
+                <input type="hidden" name="file_path" value="">
+                <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>
+            </form>
         </div>
+
         {% endfor %}
     </div>
 

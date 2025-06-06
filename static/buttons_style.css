@@ -27,6 +27,7 @@ button {
     cursor: pointer;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.521);
     transition: transform 0.2s;
+    margin: auto;
 }
 
 button:hover {

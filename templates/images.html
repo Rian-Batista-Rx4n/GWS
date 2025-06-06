@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
     <title>GWS - Images</title>
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
@@ -18,9 +19,14 @@
         {% endfor %}
     </div>
 
+
     <div id="modal" class="modal" onclick="fecharModal()">
-        <span class="fechar">&times;</span>
+        <span class="Close">&times;</span>
         <img class="modal-conteudo" id="imagem-ampliada">
+        <form method="POST" action="/graywolf-delete-file">
+            <input type="hidden" name="file_path" id="file_path_input" value="">
+            <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>
+        </form>
     </div>
 
     <div id="botoes-caixa">

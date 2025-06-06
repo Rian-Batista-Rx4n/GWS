@@ -18,11 +18,21 @@
             
             <ul id="lista-arquivos">
                 {% for arquivo in arquivos %}
-                <li>
-                    <a class="link-download" href="{{ url_for('download_documento', categoria=categoria, nome_arquivo=arquivo) }}" download>{{ arquivo }}</a>
+                <li style="display: flex; align-items: center; justify-content: space-between;">
+                    <!-- Link para download -->
+                    <a class="link-download" href="{{ url_for('download_arquivo', categoria=categoria, nome_arquivo=arquivo) }}" download>{{ arquivo }}</a>
+
+                    <!-- Botão de deletar -->
+                    <form method="POST" action="/graywolf-delete-file" style="display: inline;">
+                        <input type="hidden" name="file_path" value="GWFiles/document/{{ categoria_pasta }}/{{ arquivo }}">
+                        <button type="submit" class="botao-delete" style="margin-left: 10px;">
+                            <img id="trash_button" src="../static/images/trash_icon.png" alt="" style="width: 20px;">
+                        </button>
+                    </form>
                 </li>
                 {% endfor %}
             </ul>
+
         {% else %}
             <p style="text-align:center;">There is no file here.</p>
         {% endif %}

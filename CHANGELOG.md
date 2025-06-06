@@ -2,13 +2,29 @@
 
 All major changes to this project will be documented here.
 
+## [0.9.3] - 2025-06-06
+### Added
+- File deletion system (Video, Image, Document)
+- Deny some user's name
+
+### Changed
+- Only admin can upload public files
+- Directory name
+- Private recent uploads viewer
+- Updated links
+- README.md
+
+---
+
 ## [0.9.2] - 2025-06-04
 ### Added
 - **Action Logging System**: 
   - Logs user login attempts (success/failure)
   - Logs file uploads and visibility settings
   - Logs error access attempts and permission issues
-  - Stored as plaintext in `/GWFiles/*GrayWolf.log`
+  - Stored as plaintext in `/GWLogs/*GrayWolf.log`
+
+--- 
 
 ## [0.9.1] - 2025-06-01
 ### Added
