@@ -30,9 +30,11 @@
             </select>
             <br>
             {% if admin %}
-                <p><input id="publicButton" type="checkbox" name="public" value="yes"> Public file</p>
-                <br>
+                <p><input id="publicButton" type="checkbox" name="public" value="yes"> Public File?</p>
+            {% else %}
+                <input id="publicButton" type="hidden" name="public" value="no">
             {% endif %}
+
             <input type="file" name="file" id="file" multiple required>
             <progress id="uploadProgress" value="0" max="100" style="width: 100%; display: none;"></progress>
             <p id="uploadStatus" style="text-align:center; font-weight: bold;"></p>

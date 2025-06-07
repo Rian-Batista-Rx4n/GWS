@@ -27,10 +27,9 @@ document.getElementById("chooseFile").addEventListener("change", function () {
     }
 });
 
-// Interceptar envio do formulário e usar AJAX
 const form = document.querySelector("form");
 form.addEventListener("submit", function (e) {
-    e.preventDefault(); // impede envio tradicional
+    e.preventDefault();
 
     const fileInput = document.getElementById("file");
     const chooseFile = document.getElementById("chooseFile").value;
@@ -58,7 +57,6 @@ form.addEventListener("submit", function (e) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/graywolf-upload-file", true);
 
-    // Evento de progresso
     xhr.upload.onprogress = function (event) {
         if (event.lengthComputable) {
             const percent = Math.round((event.loaded / event.total) * 100);
@@ -68,7 +66,6 @@ form.addEventListener("submit", function (e) {
         }
     };
 
-    // Evento de fim
     xhr.onload = function () {
         if (xhr.status === 200) {
             status.textContent = "Upload Complete!";
