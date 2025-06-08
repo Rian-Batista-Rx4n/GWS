@@ -10,10 +10,10 @@ is a lightweight web application built with **Flask (Python)**, designed to turn
 - Recent upload preview
 - Responsive interface (HTML + CSS + JS)
 
-![Last commit](https://badgen.net/github/last-commit/Rian-Batista-Rx4n/GWS)
-![Repo size](https://badgen.net/github/repo-size/Rian-Batista-Rx4n/GWS)
-![License](https://badgen.net/github/license/Rian-Batista-Rx4n/GWS)
-![Top Language](https://badgen.net/github/top-language/Rian-Batista-Rx4n/GWS)
+![Last commit](https://img.shields.io/github/last-commit/Rian-Batista-Rx4n/GWS)
+![Repo size](https://img.shields.io/github/repo-size/Rian-Batista-Rx4n/GWS)
+![License](https://img.shields.io/github/license/Rian-Batista-Rx4n/GWS)
+![Top Language](https://img.shields.io/github/languages/top/Rian-Batista-Rx4n/GWS)
 
 
 ---
