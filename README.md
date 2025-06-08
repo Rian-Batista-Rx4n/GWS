@@ -12,8 +12,7 @@ A personal file management system built with Flask, featuring audio, video, imag
 - [Technologies Used](#️-technologies-used)
 - [Installation Guide](#-installation-guide)
   - [Cloning the repository](#cloning-the-repository)
-  - [Installing with installer script](#installing-with-installer-script)
-- [First-Time Login](#-first-time-login)
+  - [Installing with installer script](#download-installers)
 - [License](#-license)
 
 ---
