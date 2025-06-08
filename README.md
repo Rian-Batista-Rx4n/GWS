@@ -1,4 +1,4 @@
-# 🐺 Gray Wolf System – v0.9.3 Beta
+# 🐺 Gray Wolf System – v0.9.4 Beta
 A personal file management system built with Flask, featuring audio, video, image players and more – all accessible through a responsive web interface.
 ---
 
@@ -39,7 +39,7 @@ is a lightweight web application built with **Flask (Python)**, designed to turn
 
 4. Access via device IP or: `http://127.0.0.1:8080`
 ---
-## 🚧 Status: Beta v0.9.3
+## 🚧 Status: Beta v0.9.4
 
 ✅ Available Features:
 - [x] File upload and download

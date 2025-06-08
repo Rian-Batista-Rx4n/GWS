@@ -1,8 +1,56 @@
-from flask import Flask, render_template, request, redirect, flash, session, send_from_directory, url_for
-from datetime import datetime
-from werkzeug.utils import secure_filename
 import os, json
+import json
+from datetime import datetime
+import getpass
+
+users_json_path = os.path.join("GWData", "GWS_Users", "users.json")
+
+def garantir_usuario_admin():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    if not os.path.exists(users_json_path):
+        print("⚠️ No users data! please create a ADMIN user now!")
+
+        os.makedirs(os.path.dirname(users_json_path), exist_ok=True)
+
+        username = input("→ Username: ").strip()
+        while not username:
+            username = input("→ Username can't be empty: ").strip()
+
+        password = getpass.getpass("→ Password: ").strip()
+        while not password:
+            password = getpass.getpass("→ Password can't be empty: ").strip()
+
+        criado_em = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        users_data = {
+            username: {
+                "senha": password,
+                "nivel": "admin",
+                "criado_em": criado_em,
+                "armazenamento_usado": 0
+            }
+        }
+        with open(users_json_path, "w") as f:
+            json.dump(users_data, f, indent=4, ensure_ascii=False)
+
+        print(f"✅ ADMIN '{username}' is an admin now!")
+
+garantir_usuario_admin()
+
+from flask import Flask, render_template, request, redirect, flash, session, send_from_directory, url_for
+from werkzeug.utils import secure_filename
 from urllib.parse import quote
+
+def formatar_tamanho(bytes_size):
+    if bytes_size >= 1024 * 1024 * 1024:
+        return f"{bytes_size / (1024 * 1024 * 1024):,.3f} GB"
+    elif bytes_size >= 1024 * 1024:
+        return f"{bytes_size / (1024 * 1024):,.3f} MB"
+    elif bytes_size >= 1024:
+        return f"{bytes_size / 1024:,.3f} KB"
+    else:
+        return f"{bytes_size:,} B"
+
 
 LOG_DIR = "GWLogs"
 LOG_FILE = os.path.join(LOG_DIR, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - GrayWolf.log")
@@ -12,7 +60,6 @@ def registrar_log(acao, usuario="SYSTEM", detalhes=""):
     agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOG_FILE, "a") as log:
         log.write(f"[{agora}] [{usuario}] {acao} - {detalhes}\n")
-        # PARAMETROS: acao, usuario="sistema", detalhes=""
 registrar_log("Start", "SYSTEM", "Server Started")
 
 USERS_FILE = "GWData/GWS_Users/users.json"
@@ -32,6 +79,8 @@ def salvar_usuarios(usuarios):
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCUMENTS_DIR = os.path.join(BASE_DIR, "GWFiles", "document")
+BASE_DIR_GWF = os.path.abspath(os.path.dirname(__file__))
+GWFILES_DIR = os.path.join(BASE_DIR, "GWFiles")
 
 pastas_criadas = False
 estrutura = {
@@ -55,7 +104,7 @@ for categoria, subcategorias in estrutura.items():
 
 pastas_criadas = True
 
-UPLOAD_FOLDER = 'GWUpload'
+UPLOAD_FOLDER = 'GWFiles/geral/no_subcategory'
 ALLOWED_EXTENSIONS = {
     'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp', 'ico',
     'zip', 'rar', '7z', 'tar', 'gz', 'xz',
@@ -203,7 +252,7 @@ def show_upload_page():
     return render_template("upload.html", admin=admin)
 
 
-@app.route("/graywolf-upload-file", methods=["POST"])
+@app.route("/graywolf-upload-file", methods=["POST", "GET"])
 def upload_file():
     usuario_logado = session.get('usuario_logado')
     usuarios = carregar_usuarios()
@@ -239,17 +288,28 @@ def upload_file():
 
         usuario_logado = session.get("usuario_logado", "unknow")
         usuarios = carregar_usuarios()
+
         if publico:
             if usuarios.get(usuario_logado, {}).get("nivel") == "admin":
                 filename = f"public_{usuario}_{filename_base}"
-                registrar_log("Upload", session.get("usuario_logado", "unknow"), f"Uploaded: {filename_base}")
             else:
                 filename = f"{usuario}_{filename_base}"
-                registrar_log("Upload", session.get("usuario_logado", "unknow"), f"Uploaded: {filename_base}")
         else:
             filename = f"{usuario}_{filename_base}"
-        
-        registrar_log("Upload", session.get("usuario_logado", "unknow"), f"Uploaded: {filename_base}")
+
+        file.seek(0, os.SEEK_END)
+        file_size = file.tell()
+        file.seek(0)
+
+        if "armazenamento_usado" not in usuarios[usuario_logado]:
+            usuarios[usuario_logado]["armazenamento_usado"] = 0
+        usuarios[usuario_logado]["armazenamento_usado"] += file_size
+
+        with open("GWData/GWS_Users/users.json", "w") as f:
+            json.dump(usuarios, f, indent=4)
+
+        registrar_log("Upload", session.get("usuario_logado", "unknow"), f"Uploaded: {filename_base} ({file_size} bytes)")
+
         filepath = os.path.join(folder_path, filename)
         file.save(filepath)
 
@@ -261,8 +321,9 @@ def upload_file():
 # ======================================== VER UPLOADS ===============================
 @app.route('/download/<path:nome_arquivo>')
 def download_arquivo(nome_arquivo):
-    pasta_arquivos = '/caminho/para/sua/pasta/GWFiles'
-    return send_from_directory(pasta_arquivos, nome_arquivo, as_attachment=True)
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    GWFILES_DIR = os.path.join(BASE_DIR, "GWFiles")
+    return send_from_directory(GWFILES_DIR, nome_arquivo, as_attachment=True)
 
 @app.route('/graywolf-uploadFiles')
 def upload_files_page():
@@ -278,40 +339,70 @@ def upload_files_page():
 
     arquivos = []
 
-    for root, dirs, files in os.walk("GWFiles"):
+    for root, dirs, files in os.walk(GWFILES_DIR):
         for file in files:
             if not allowed_file(file):
                 registrar_log("Uploads", usuario, "Not Permitted")
                 continue
 
-            # Lógica de permissão:
+            relative_path = os.path.relpath(os.path.join(root, file), start=GWFILES_DIR)
+
             if is_admin:
-                # Admin pode ver tudo
-                caminho = os.path.relpath(os.path.join(root, file), start="GWFiles")
-                caminho_quote = quote(caminho)
-                arquivos.append(caminho_quote)
+                arquivos.append(relative_path)
             else:
-                # Usuário normal: só seus arquivos ou public_
                 if file.startswith(f"{usuario}_") or file.startswith("public_"):
-                    caminho = os.path.relpath(os.path.join(root, file), start="GWFiles")
-                    caminho_quote = quote(caminho)
-                    arquivos.append(caminho_quote)
+                    arquivos.append(relative_path)
+
 
     registrar_log("Uploads", usuario, "Uploads Rendered")
     return render_template('uploadFiles.html', arquivos=arquivos)
 
 # ========================================== DELETAR ARQUIVOS ================================
-@app.route("/graywolf-delete-file", methods=["POST"])
+@app.route("/graywolf-delete-file", methods=["GET", "POST"])
 def delete_file():
     usuario_logado = session.get('usuario_logado')
     usuarios = carregar_usuarios()
-    
+
     if not usuario_logado:
         return redirect('/graywolf-login')
 
-    file_path = request.form.get('file_path')
+    if request.method == "POST":
+        file_path = request.form.get('file_path')
+    else:
+        file_path = request.args.get('file_path')
+
     if not file_path or not os.path.exists(file_path):
-        print(f"Tentando deletar: {file_path}")
+        nome_arquivo = os.path.basename(file_path)
+
+        is_admin = usuarios.get(usuario_logado, {}).get("nivel") == "admin"
+        is_dono_do_arquivo = (
+            nome_arquivo.startswith(f"public_{usuario_logado}_") or
+            nome_arquivo.startswith(f"{usuario_logado}_")
+        )
+        file_path = request.form.get('file_path')
+        if is_admin or is_dono_do_arquivo:
+            file_size = os.path.getsize(f"GWFiles/{file_path}")
+
+            os.remove(f"GWFiles/{file_path}")
+            registrar_log("Delete", usuario_logado, f"Deleted: {file_path} ({file_size} bytes)")
+
+            if nome_arquivo.startswith("public_"):
+                dono_arquivo = nome_arquivo.split("_")[1]
+            else:
+                dono_arquivo = nome_arquivo.split("_")[0]
+
+            if dono_arquivo in usuarios:
+                if "armazenamento_usado" not in usuarios[dono_arquivo]:
+                    usuarios[dono_arquivo]["armazenamento_usado"] = 0
+                usuarios[dono_arquivo]["armazenamento_usado"] -= file_size
+                if usuarios[dono_arquivo]["armazenamento_usado"] < 0:
+                    usuarios[dono_arquivo]["armazenamento_usado"] = 0
+
+
+            with open("GWData/GWS_Users/users.json", "w") as f:
+                json.dump(usuarios, f, indent=4)
+        else:
+            registrar_log("Delete", usuario_logado, f"Tried to delete unauthorized: {file_path}")
         return redirect(request.referrer)
 
     nome_arquivo = os.path.basename(file_path)
@@ -323,9 +414,25 @@ def delete_file():
     )
 
     if is_admin or is_dono_do_arquivo:
+        file_size = os.path.getsize(file_path)
+
         os.remove(file_path)
-        registrar_log("Delete", usuario_logado, f"Deleted: {file_path}")
-        
+        registrar_log("Delete", usuario_logado, f"Deleted: {file_path} ({file_size} bytes)")
+
+        if nome_arquivo.startswith("public_"):
+            dono_arquivo = nome_arquivo.split("_")[1]
+        else:
+            dono_arquivo = nome_arquivo.split("_")[0]
+
+        if dono_arquivo in usuarios:
+            if "armazenamento_usado" not in usuarios[dono_arquivo]:
+                usuarios[dono_arquivo]["armazenamento_usado"] = 0
+            usuarios[dono_arquivo]["armazenamento_usado"] -= file_size
+            if usuarios[dono_arquivo]["armazenamento_usado"] < 0:
+                usuarios[dono_arquivo]["armazenamento_usado"] = 0
+
+        with open("GWData/GWS_Users/users.json", "w") as f:
+            json.dump(usuarios, f, indent=4)
     else:
         registrar_log("Delete", usuario_logado, f"Tried to delete unauthorized: {file_path}")
 
@@ -333,7 +440,7 @@ def delete_file():
 
 
 # ========================================== FAZER LOGOUT ====================================
-@app.route("/logout")
+@app.route("/graywolf-logout")
 def logout():
     usuario = session.get('usuario_logado')
     session.pop('usuario_logado', None)
@@ -351,12 +458,17 @@ def exibir_videos(subcategoria):
         return redirect("/graywolf-upload")
 
     usuario = session['usuario_logado']
+    
+    with open(USERS_FILE) as f:
+        usuarios = json.load(f)
+        user_info = usuarios.get(usuario)
+        is_admin = user_info and user_info.get("nivel") == "admin"
 
     arquivos = [
         f for f in os.listdir(caminho_pasta)
         if os.path.isfile(os.path.join(caminho_pasta, f))
         and allowed_file(f)
-        and (f.startswith(f'{usuario}_') or f.startswith('public_'))
+        and (f.startswith(f'{usuario}_') or f.startswith('public_') or is_admin)
     ]
     registrar_log("Video", session.get("usuario_logado", "unknow"), f"Video: {subcategoria} Rendered")
     return render_template("videos.html", subcategoria=subcategoria, arquivos=arquivos)
@@ -371,16 +483,20 @@ def servir_video(subcategoria, nome_arquivo):
 def exibir_audios(subcategoria):
     registrar_log("Audio", session.get("usuario_logado", "unknow"), f"Audio: {subcategoria} Accessed")
     caminho_pasta = os.path.join("GWFiles", "audio", subcategoria)
-
+    usuario = session['usuario_logado']
     if not os.path.exists(caminho_pasta):
         return redirect("/graywolf-upload")
+    
+    with open(USERS_FILE) as f:
+        usuarios = json.load(f)
+        user_info = usuarios.get(usuario)
+        is_admin = user_info and user_info.get("nivel") == "admin"
 
-    usuario = session['usuario_logado']
     arquivos = [
         f for f in os.listdir(caminho_pasta)
         if os.path.isfile(os.path.join(caminho_pasta, f))
         and allowed_file(f)
-        and (f.startswith(f'{usuario}_') or f.startswith('public_'))
+        and (f.startswith(f'{usuario}_') or f.startswith('public_') or is_admin)
     ]
     registrar_log("Audio", session.get("usuario_logado", "unknow"), f"Audio: {subcategoria} Rendered")
     return render_template("audios.html", subcategoria=subcategoria, arquivos=arquivos)
@@ -415,7 +531,6 @@ def exibir_imagens_por_subcategoria(subcategoria):
     if not os.path.exists(caminho):
         return redirect("/graywolf-upload")
 
-    # Usa a constante USERS_FILE
     with open(USERS_FILE) as f:
         usuarios = json.load(f)
     user_info = usuarios.get(usuario)
@@ -458,18 +573,16 @@ def exibir_documentos_categoria(categoria):
     if categoria in categoria_map:
         pasta = os.path.join(BASE_DIR, "GWFiles", "document", categoria_map[categoria])
         usuario = session['usuario_logado']
-        usuarios = carregar_usuarios()  # Carrega o JSON dos usuários
-        nivel_usuario = usuarios.get(usuario, {}).get("nivel", "user")  # "admin" ou "user"
+        usuarios = carregar_usuarios()
+        nivel_usuario = usuarios.get(usuario, {}).get("nivel", "user")
 
         if nivel_usuario == "admin":
-            # Admin vê todos os arquivos permitidos
             arquivos = [
                 arquivo for arquivo in os.listdir(pasta)
                 if os.path.isfile(os.path.join(pasta, arquivo))
                 and allowed_file(arquivo)
             ]
         else:
-            # Usuário comum vê só os seus + public
             arquivos = [
                 arquivo for arquivo in os.listdir(pasta)
                 if os.path.isfile(os.path.join(pasta, arquivo))
@@ -488,7 +601,36 @@ def exibir_documentos_categoria(categoria):
 
     else:
         return redirect(url_for('document_page'))
+# ============================ STATS =================================
+@app.route("/graywolf-stats", methods=["GET"])
+def graywolf_stats():
+    usuario_logado = session.get("usuario_logado")
+    
+    registrar_log("Stats", session.get("usuario_logado", "unknow"), "Stats Accessed")
 
-# ==================== FIM =====================
+    if not usuario_logado:
+        registrar_log("Stats", session.get("usuario_logado", "unknow"), "Not in Session")
+        return redirect("/")
+
+    usuarios = carregar_usuarios()
+
+    if usuarios.get(usuario_logado, {}).get("nivel") == "admin":
+        registrar_log("Stats", session.get("usuario_logado", "unknow"), "Not Admin")
+        lista_usuarios = []
+        for nome, dados in usuarios.items():
+            lista_usuarios.append({
+                "nome": nome,
+                "nivel": dados.get("nivel", "???"),
+                "criado_em": dados.get("criado_em", "???"),
+                "armazenamento_usado": dados.get("armazenamento_usado", 0)
+            })
+
+        registrar_log("Stats", session.get("usuario_logado", "unknow"), "Admin Access")
+        return render_template("stats.html", usuarios=lista_usuarios, formatar_tamanho=formatar_tamanho)
+    else:
+        return render_template("homepage.html")
+
+# ==================== FIM ============================
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8080)

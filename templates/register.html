@@ -9,7 +9,12 @@
     <title>Gray Wolf System</title>
 </head>
 <body>
-    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+    <div id="topo">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
     <div id="caixa_login-1">
         <img id="logo_imagem" src="../static/images/GrayWolf_512x.png" alt="logo-imagem">
         <p id="texto_1">Please fill in the spaces below to add a new user.</p>
@@ -24,11 +29,6 @@
             </div>          
         </form>
 
-    </div>
-    <div id="botoes-caixa">
-        <form action="/graywolf-back" method="GET">
-            <button id="backButton" type="submit">Back to HomePage.</button>
-        </form>
     </div>
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>

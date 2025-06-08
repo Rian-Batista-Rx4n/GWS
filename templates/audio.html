@@ -10,7 +10,12 @@
     <title>GWS - Audio</title>
 </head>
 <body>
-    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+    <div id="topo">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
 
     <div id="botoes-caixa">
         <form action="/graywolf-audio/music" method="GET">

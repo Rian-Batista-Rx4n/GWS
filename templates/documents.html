@@ -11,7 +11,12 @@
     <title>GWS - Documents</title>
 </head>
 <body>
-    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+    <div id="topo">
+        <form action="/graywolf-document" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
     <h2 style="text-align:center;">{{ categoria.upper() }}</h2>
     <div id="botoes-caixa">
         {% if arquivos %}
@@ -36,12 +41,6 @@
         {% else %}
             <p style="text-align:center;">There is no file here.</p>
         {% endif %}
-    </div>
-
-    <div id="botoes-caixa">
-        <form action="/graywolf-document" method="GET">
-            <button id="backButton" type="submit">Back to Categories</button>
-        </form>
     </div>
 
     <div id="roda_pe">

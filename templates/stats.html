@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/base_style.css">
+    <link rel="stylesheet" href="../static/backButton_style.css">
+    <link rel="stylesheet" href="../static/stats.css">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
+    <title>Gray Wolf System</title>
+</head>
+<body>
+    <div id="topo">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
+    <div id="users_stats">
+        <h2>Users Stats</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Nivel</th>
+                    <th>Creted in</th>
+                    <th>Using</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in usuarios %}
+                <tr>
+                    <td>{{ user.nome }}</td>
+                    <td>{{ user.nivel }}</td>
+                    <td>{{ user.criado_em }}</td>
+                    <td>{{ formatar_tamanho(user.armazenamento_usado) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div><p>~ Gray Wolf ~</p></div>
+    </div>
+
+
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>
+</body>
+</html>

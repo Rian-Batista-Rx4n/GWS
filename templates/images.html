@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="../static/images.css">
 </head>
 <body>
-    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+    <div id="topo">
+        <form action="/graywolf-image" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
     <h1>{{ subcategoria }}</h1>
 
     <div class="galeria">
@@ -26,12 +31,6 @@
         <form method="POST" action="/graywolf-delete-file">
             <input type="hidden" name="file_path" id="file_path_input" value="">
             <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>
-        </form>
-    </div>
-
-    <div id="botoes-caixa">
-        <form action="/graywolf-image" method="GET">
-            <button id="backButton" type="submit">Back to Categories.</button>
         </form>
     </div>
 

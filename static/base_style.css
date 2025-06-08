@@ -42,3 +42,12 @@ h1 {
     z-index: 1000;          /* garante que fique por cima de outros elementos */
     font-family: Arial, Helvetica, sans-serif;
 }
+#linha {
+    width: 90%;
+    height: 2px;
+    border-radius: 10px 10px 10px 10px;
+    background-color: rgb(255, 255, 255);
+    margin: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}

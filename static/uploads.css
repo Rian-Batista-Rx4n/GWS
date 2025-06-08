@@ -1,47 +1,10 @@
-body, html {
-    background-color: rgb(20, 20, 20);
-    color: white;
-    margin: auto;
-    height: 100%;
-}
-
-#topo {
-    width: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2em;
-    height: 3.5em;
-    background-color: rgb(46, 46, 46);
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.256);
-}
-
-h1 {
-    margin: auto;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-    font-size: 1.5em;
-}
-
-#roda_pe {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #222; /* você pode mudar a cor */
-    color: white;           /* cor do texto */
-    text-align: center;
-    padding: 10px 0;
-    z-index: 1000;          /* garante que fique por cima de outros elementos */
-    font-family: Arial, Helvetica, sans-serif;
-}
 
 .arquivo {
     background-color: #333;
     margin: 0.5em auto;
-    padding: 1em;
-    width: 60%;
+    width: 90%;
+    height: 3em;
+    padding: 10px;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
@@ -67,6 +30,7 @@ a {
     color: cyan;
     text-decoration: none;
     font-weight: bold;
+    margin: 5%;
 }
 
 a:hover {
@@ -81,7 +45,6 @@ a:hover {
     border: none;
     color: white;
     border-radius: 5px;
-    padding: 1px;
     cursor: pointer;
     margin-top: 0.5em;
     text-align: center;
@@ -93,4 +56,14 @@ a:hover {
 
 #trash_button {
     width: 100%;
+}
+
+span {
+    width: 80%;
+}
+
+#space {
+    margin-bottom: 5em;
+    width: 10%;
+    height: 1em;
 }

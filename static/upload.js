@@ -27,8 +27,8 @@ document.getElementById("chooseFile").addEventListener("change", function () {
     }
 });
 
-const form = document.querySelector("form");
-form.addEventListener("submit", function (e) {
+const uploadForm = document.getElementById("uploadForm");
+uploadForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const fileInput = document.getElementById("file");
@@ -62,7 +62,7 @@ form.addEventListener("submit", function (e) {
             const percent = Math.round((event.loaded / event.total) * 100);
             progress.style.display = "block";
             progress.value = percent;
-            status.textContent = `Uploading...: ${percent}%`;
+            status.textContent = `Uploading...  ${percent}%`;
         }
     };
 

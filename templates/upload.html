@@ -9,10 +9,16 @@
     <title>GWS - Upload</title>
 </head>
 <body>
-    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
-
-    <form action="/graywolf-upload-file" method="POST" enctype="multipart/form-data">
+    <div id="topo">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
+    
+    <form id="uploadForm" action="/graywolf-upload-file" method="POST" enctype="multipart/form-data">
         <div id="upload-caixa">
+            <div id="linha"></div>
             <h2>Choose where to save the file:</h2>
             <select name="chooseFile" id="chooseFile" required>
                 <option value="">Choose the category</option>
@@ -24,11 +30,13 @@
                 <option value="geral">Others</option>
             </select>
             <br>
+            <div id="linha"></div>
             <h2>Subcategory:</h2>
             <select name="subCategory" id="subCategory" required>
                 <option value="">Select a subcategory</option>
             </select>
             <br>
+            <div id="linha"></div>
             {% if admin %}
                 <p><input id="publicButton" type="checkbox" name="public" value="yes"> Public File?</p>
             {% else %}
@@ -38,14 +46,9 @@
             <input type="file" name="file" id="file" multiple required>
             <progress id="uploadProgress" value="0" max="100" style="width: 100%; display: none;"></progress>
             <p id="uploadStatus" style="text-align:center; font-weight: bold;"></p>
-            <button type="submit">Upload</button>
+            <button id="uploadButton" type="submit">Upload</button>
         </div>
     </form>
-    <div id="botoes-caixa">
-        <form action="/graywolf-back" method="GET">
-            <button id="backButton" type="submit">Back to HomePage.</button>
-        </form>
-    </div>
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>

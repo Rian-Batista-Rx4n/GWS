@@ -2,6 +2,21 @@
 
 All major changes to this project will be documented here.
 
+## [0.9.4] - 2025-06-08
+### Added
+- **Logout system** with a button available on the homepage
+- **System Status page** (shows memory usage and user stats, accessible only to Admins)
+- Automatic creation of the **users.json** file when starting the system (`main.py`), requiring initial Admin configuration
+
+### Changed
+- **Back button** redesigned (now an icon in the top-left corner)
+- Various **CSS improvements and visual adjustments**
+- **Installer updated**:
+  - Now allows setting up an Admin user during installation (no longer default `rx4n/rx4n`)
+  - Now supports updating GWS without losing personal files or configuration
+
+---
+
 ## [0.9.3] - 2025-06-06
 ### Added
 - File deletion system (Video, Image, Document)

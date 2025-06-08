@@ -1,0 +1,41 @@
+#users_stats {
+    background-color: rgb(71, 71, 71);
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 1px;
+    position: absolute;
+    color: white;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    margin-top: 1em;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#users_stats table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    padding: 1px;
+    
+}
+
+#users_stats th, #users_stats td {
+    padding: 5px;
+    border: 1px solid #444;
+    text-align: center;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+}
+
+#users_stats th {
+    background-color: #333;
+    color: #fff;
+    
+}

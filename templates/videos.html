@@ -11,7 +11,12 @@
     <link rel="stylesheet" href="../static/videos.css">
 </head>
 <body>
-    <div id="topo"><h1 id="titulo">Gray Wolf System.</h1></div>
+    <div id="topo">
+        <form action="/graywolf-video" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
     <h1>{{ subcategoria.capitalize() }}</h1>
 
     <div class="video-grid">
@@ -33,10 +38,6 @@
 
         {% endfor %}
     </div>
-
-    <form action="/graywolf-video" method="GET">
-        <button id="backButton" type="submit">Back to Categories.</button>
-    </form>
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>
