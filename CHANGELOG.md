@@ -1,6 +1,15 @@
 # Changelog
 
 All major changes to this project will be documented here.
+## [0.9.5] - 2025-06-14
+### Added
+- Text viewer system by category and type (e.g., organized access to .txt files)
+- Ability to rename files (Video, Text, Document) through the interface
+
+### Changed
+- Minor CSS improvements and visual polish for better consistency and readability
+
+---
 
 ## [0.9.4] - 2025-06-08
 ### Added

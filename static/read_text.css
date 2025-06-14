@@ -1,0 +1,42 @@
+#box {
+    padding: 1em;
+    background-color: rgb(64, 64, 64);
+    margin: auto;
+    width: 90%;
+    border-radius: 15px 15px 15px 15px;
+    margin-bottom: 10em;
+}
+
+#text {
+    background-color: white;
+    color: black;
+    border-radius: 5px 5px 5px 5px;
+    margin: auto;
+    width: 90%;
+    padding: 1em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-shadow: 5px 5px 10px black;
+    font-size: 200%;
+}
+
+.botao-delete {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 1em;
+    background-color: red;
+}
+
+.edit_button {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 1em;
+    background-color: rgb(255, 255, 255);
+}
+
+#tools {
+    padding: 1em;
+    display: inline-block;
+    justify-content: center;
+    display: flex;
+    gap: 1%;
+}

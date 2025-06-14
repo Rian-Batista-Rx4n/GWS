@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='backButton_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='buttons_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='read_text.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/GrayWolf_512png.png') }}" type="image/x-icon">
+    
+    <title>GWS - Texts</title>
+</head>
+
+<body>
+    <div id="topo">
+        <form action="/graywolf-text" method="GET">
+            <button id="backButton" type="submit"><img src="{{ url_for('static', filename='images/backButton_icon.png') }}" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
+    <h2 style="text-align:center;">{{ file_name.upper() }}</h2>
+    <div id="box">
+        <div id="tools">
+            <form method="POST" action="/graywolf-edit-text" style="display: inline;">
+                <input type="hidden" name="file_path" value="GWFiles/text/{{ categoria_pasta }}/{{ arquivo }}">
+                <button type="submit" class="edit_button">
+                    <img id="edit_button" src="{{ url_for('static', filename='images/edit_icon.png') }}" alt="">
+                </button>
+            </form>
+        </div>
+        
+        <div id="text">
+            <pre style="white-space: pre-wrap; word-wrap: break-word;">{{ conteudo | e }}</pre>
+        </div>
+    </div>
+
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>
+</body>
+
+</html>

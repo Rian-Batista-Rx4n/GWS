@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/backButton_style.css">
+    <link rel="stylesheet" href="../static/base_style.css">
+    <link rel="stylesheet" href="../static/buttons_style.css">
+    <link rel="stylesheet" href="../static/rename_style.css">
+    <title>GWS - Rename</title>
+</head>
+<body>
+    <div id="topo">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
+    <h1>Rename File</h1>
+    <div id="box">
+        <form method="POST" action="{{ url_for('graywolf_rename_file') }}">
+            <input type="hidden" name="arquivo_antigo_path" value="{{ arquivo_path }}">
+            <h2 for="novo_nome">New File Name:</h2>
+            <br>
+            <input id="newName" type="text" name="novo_nome" value="{{ nome_arquivo }}" required>
+            <br>
+            <button id="renameButton" type="submit">Rename</button>
+        </form>
+    </div>
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>
+</body>
+</html>

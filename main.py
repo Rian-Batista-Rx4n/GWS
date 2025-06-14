@@ -1,10 +1,26 @@
-import os, json
-import json
+# =============================================================
+# --------------------- IMPORTS -------------------------------
+# =============================================================
+from flask import Flask, render_template, request, redirect, flash, session, send_from_directory, url_for, abort
+from werkzeug.utils import secure_filename
+from urllib.parse import quote
 from datetime import datetime
 import getpass
+import os, json
+import json
 
-users_json_path = os.path.join("GWData", "GWS_Users", "users.json")
+# =============================================================
+# --------------------- FUNCTIONS -----------------------------
+# =============================================================
 
+# Function to generate logs
+def registrar_log(acao, usuario="SYSTEM", detalhes=""):
+    agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(LOG_FILE, "a") as log:
+        log.write(f"[{agora}] [{usuario}] {acao} - {detalhes}\n")
+
+
+#Funtion to create the first ADMIN of the system
 def garantir_usuario_admin():
     os.system('cls' if os.name == 'nt' else 'clear')
     if not os.path.exists(users_json_path):
@@ -35,12 +51,26 @@ def garantir_usuario_admin():
 
         print(f"✅ ADMIN '{username}' is an admin now!")
 
-garantir_usuario_admin()
+# Load all users in the system to verify if then exist
+def carregar_usuarios():
+    registrar_log("USERS", session.get("usuario_logado", "unknow"), "Loading Users")
+    if not os.path.exists(USERS_FILE):
+        with open(USERS_FILE, "w") as f:
+            json.dump({}, f)
+    with open(USERS_FILE, "r") as f:
+        return json.load(f)
 
-from flask import Flask, render_template, request, redirect, flash, session, send_from_directory, url_for
-from werkzeug.utils import secure_filename
-from urllib.parse import quote
+# Save the new users data
+def salvar_usuarios(usuarios):
+    registrar_log("USERS", session.get("usuario_logado", "unknow"), "User Saved")
+    with open(USERS_FILE, "w") as f:
+        json.dump(usuarios, f, indent=4)
 
+# Function to verify if the file is allowed
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Turn B >> KB >> MB >> GB in the front end
 def formatar_tamanho(bytes_size):
     if bytes_size >= 1024 * 1024 * 1024:
         return f"{bytes_size / (1024 * 1024 * 1024):,.3f} GB"
@@ -51,37 +81,34 @@ def formatar_tamanho(bytes_size):
     else:
         return f"{bytes_size:,} B"
 
-
+# PATHs
+users_json_path = os.path.join("GWData", "GWS_Users", "users.json")
 LOG_DIR = "GWLogs"
 LOG_FILE = os.path.join(LOG_DIR, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - GrayWolf.log")
 os.makedirs(LOG_DIR, exist_ok=True)
-
-def registrar_log(acao, usuario="SYSTEM", detalhes=""):
-    agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(LOG_FILE, "a") as log:
-        log.write(f"[{agora}] [{usuario}] {acao} - {detalhes}\n")
-registrar_log("Start", "SYSTEM", "Server Started")
-
 USERS_FILE = "GWData/GWS_Users/users.json"
-
-def carregar_usuarios():
-    registrar_log("USERS", session.get("usuario_logado", "unknow"), "Loading Users")
-    if not os.path.exists(USERS_FILE):
-        with open(USERS_FILE, "w") as f:
-            json.dump({}, f)
-    with open(USERS_FILE, "r") as f:
-        return json.load(f)
-
-def salvar_usuarios(usuarios):
-    registrar_log("USERS", session.get("usuario_logado", "unknow"), "User Saved")
-    with open(USERS_FILE, "w") as f:
-        json.dump(usuarios, f, indent=4)
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCUMENTS_DIR = os.path.join(BASE_DIR, "GWFiles", "document")
 BASE_DIR_GWF = os.path.abspath(os.path.dirname(__file__))
 GWFILES_DIR = os.path.join(BASE_DIR, "GWFiles")
+UPLOAD_FOLDER = 'GWFiles/geral/no_subcategory'
 
+# Allowed file extensions
+ALLOWED_EXTENSIONS = {
+    'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp', 'ico',
+    'zip', 'rar', '7z', 'tar', 'gz', 'xz',
+    'doc', 'docx', 'odt', 'xls', 'xlsx', 'ods', 'ppt', 'pptx', 'csv', 'rtf',
+    'mp4', 'mkv', 'avi', 'mov', 'webm',
+    'mp3', 'wav', 'ogg', 'flac', 'm4a',
+    'py', 'js', 'html', 'css', 'json', 'xml', 'sql', 'md', 'sh'
+}
+
+# First User Creation be admin
+registrar_log("Start", "SYSTEM", "Server Started")
+garantir_usuario_admin()
+
+# First Folders Maker
+# Verify if folder are created
 pastas_criadas = False
 estrutura = {
         "video": ["movie", "serie", "video_no_category"],
@@ -93,6 +120,7 @@ estrutura = {
         "geral": ["sem_categoria"]
     }
 
+# For each category, create a folder for category and its subfolders based on category, subcategory folder
 for categoria, subcategorias in estrutura.items():
     if subcategorias:
         for sub in subcategorias:
@@ -102,30 +130,22 @@ for categoria, subcategorias in estrutura.items():
         caminho = os.path.join("GWFiles", categoria)
         os.makedirs(caminho, exist_ok=True)
 
+# Update the verify of then category folders
 pastas_criadas = True
 
-UPLOAD_FOLDER = 'GWFiles/geral/no_subcategory'
-ALLOWED_EXTENSIONS = {
-    'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp', 'ico',
-    'zip', 'rar', '7z', 'tar', 'gz', 'xz',
-    'doc', 'docx', 'odt', 'xls', 'xlsx', 'ods', 'ppt', 'pptx', 'csv', 'rtf',
-    'mp4', 'mkv', 'avi', 'mov', 'webm',
-    'mp3', 'wav', 'ogg', 'flac', 'm4a',
-    'py', 'js', 'html', 'css', 'json', 'xml', 'sql', 'md', 'sh'
-}
-
-
+# =============================================================
+# ------------------------- GWS SYSTEM BACKEND ----------------
+# =============================================================
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', os.urandom(24))
 
+# Make a UPLOAD FOLDER if don't exist
 if not os.path.exists(UPLOAD_FOLDER):
     registrar_log("PATH", "SYSTEM", "Upload Path Created")
     os.makedirs(UPLOAD_FOLDER)
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+# First page, index, load the LOGIN page
 @app.route("/")
 def home():
     registrar_log("Login", session.get("usuario_logado", "unknow"), "Login Accessed")
@@ -136,13 +156,22 @@ def home():
 def pagina_nao_encontrada(error):
     return render_template("404_page.html"), 404
 
-# ===================== BOTÃO PARA VOLTAR PARA HOMEPAGE =======================
+# ===================== Back Button =======================
 @app.route("/graywolf-back", methods=["GET"])
 def graywolf_back():
     registrar_log("Back Button", session.get("usuario_logado", "unknow"), "Back to the HomePage")
     return render_template("homepage.html")
 
-# ========================== REALIZAR REGISTRO =================================
+# ========================================== Do Logout ====================================
+@app.route("/graywolf-logout")
+def logout():
+    usuario = session.get('usuario_logado')
+    session.pop('usuario_logado', None)
+    agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    registrar_log("LOGOUT", session.get("usuario_logado", "unknow"), f"{usuario} left the game")
+    return redirect("/")
+
+# ========================== Make a Register =================================
 @app.route("/graywolf-register", methods=["GET", "POST"])
 def graywolf_register():
     usuario_logado = session.get("usuario_logado")
@@ -180,7 +209,7 @@ def graywolf_register():
 
     return render_template("register.html")
 
-# ========================= CARREGAR HOMEPAGE ===================
+# ========================= Load HomePage ===================
 @app.route("/graywolf-homepage", methods=["POST"])
 def graywolf_homepage():
     usuario = request.form.get("nome_usuario")
@@ -197,6 +226,7 @@ def graywolf_homepage():
         registrar_log("Login", session.get("usuario_logado", "unknow"), "Login Failed")
         return redirect("/")
 
+# Go to: Category - document
 @app.route("/graywolf-document", methods=["GET"])
 def show_document_page():
     if 'usuario_logado' not in session:
@@ -205,6 +235,7 @@ def show_document_page():
     registrar_log("Document", session.get("usuario_logado", "unknow"), "Document Accessed")
     return render_template("document.html")
 
+# =========================== Text ==========================
 @app.route("/graywolf-text", methods=["GET"])
 def show_text_page():
     if 'usuario_logado' not in session:
@@ -213,6 +244,100 @@ def show_text_page():
     registrar_log("Text", session.get("usuario_logado", "unknow"), "Text Accessed")
     return render_template("text.html")
 
+def listar_arquivos_por_categoria(categoria):
+    if 'usuario_logado' not in session:
+        registrar_log(categoria, session.get("usuario_logado", "unknow"), "Not in Session")
+        return redirect("/")
+
+    usuario = session.get('usuario_logado')
+    base_path = 'GWFiles/text'
+    extensoes_script = ['.py', '.js', '.ts', '.html', '.css', '.sh']
+    extensoes_txt = ['.txt']
+
+    if categoria == 'script':
+        extensoes_permitidas = extensoes_script
+    else:
+        extensoes_permitidas = extensoes_txt
+
+    pasta_categoria = os.path.join(base_path, categoria)
+    files = []
+
+    if os.path.exists(pasta_categoria):
+        for file in os.listdir(pasta_categoria):
+            _, ext = os.path.splitext(file)
+            if ext.lower() in extensoes_permitidas:
+                if file.startswith(f"{usuario}_") or file.startswith("public_"):
+                    files.append(file)
+
+    registrar_log("TextList", session["usuario_logado"], f"Accessed {categoria} files")
+
+    return render_template(
+        'texts.html',
+        files=files,
+        categoria=categoria,
+        categoria_pasta=categoria
+    )
+
+@app.route("/graywolf-list", methods=["GET"])
+def graywolf_list():
+    return listar_arquivos_por_categoria('list')
+
+@app.route("/graywolf-note", methods=["GET"])
+def graywolf_note():
+    return listar_arquivos_por_categoria('note')
+
+@app.route("/graywolf-script", methods=["GET"])
+def graywolf_script():
+    return listar_arquivos_por_categoria('script')
+
+@app.route("/graywolf-text-no-category", methods=["GET"])
+def graywolf_text_no_category():
+    return listar_arquivos_por_categoria('text_no_category')
+
+# =============================== Render Text =========================
+@app.route("/graywolf-read-text/<categoria>/<nome_arquivo>", methods=["GET"])
+def graywolf_read_text(categoria, nome_arquivo):
+    if 'usuario_logado' not in session:
+        registrar_log("ReadText", "unknown", "Not in Session")
+        return redirect("/")
+
+    usuario = session.get("usuario_logado")
+    base_path = os.path.join("GWFiles", "text", categoria)
+    file_path = os.path.join(base_path, nome_arquivo)
+
+    # Segurança: impede acesso fora da pasta
+    if not os.path.abspath(file_path).startswith(os.path.abspath(base_path)):
+        registrar_log("ReadText", usuario, "Access Denied (Path traversal)")
+        return abort(403)
+
+    # Verifica se o arquivo é permitido ao usuário
+    if not (nome_arquivo.startswith(f"{usuario}_") or nome_arquivo.startswith("public_")):
+        registrar_log("ReadText", usuario, f"Not permitted: {nome_arquivo}")
+        return abort(403)
+
+    # Verifica se o arquivo existe
+    if not os.path.isfile(file_path):
+        registrar_log("ReadText", usuario, f"File not found: {file_path}")
+        return abort(404)
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            conteudo = f.read()
+    except Exception as e:
+        registrar_log("ReadText", usuario, f"Error reading file: {e}")
+        conteudo = "[Erro ao ler o arquivo]"
+
+    registrar_log("ReadText", usuario, f"Read {nome_arquivo} of {categoria}")
+
+    return render_template(
+        "read_text.html",
+        file_name=nome_arquivo,
+        categoria_pasta=categoria,
+        arquivo=nome_arquivo,
+        conteudo=conteudo
+    )
+
+# Go to: Category - audio
 @app.route("/graywolf-audio", methods=["GET"])
 def show_audio_page():
     if 'usuario_logado' not in session:
@@ -221,6 +346,7 @@ def show_audio_page():
     registrar_log("Audio", session.get("usuario_logado", "unknow"), "Audio Accessed")
     return render_template("audio.html")
 
+# Go to: Category - image
 @app.route("/graywolf-image", methods=["GET"])
 def show_image_page():
     if 'usuario_logado' not in session:
@@ -229,6 +355,7 @@ def show_image_page():
     registrar_log("Image", session.get("usuario_logado", "unknow"), "Image Accessed")
     return render_template("image.html")
 
+# Go to: Category - video
 @app.route("/graywolf-video", methods=["GET"])
 def show_video_page():
     if 'usuario_logado' not in session:
@@ -237,7 +364,7 @@ def show_video_page():
     registrar_log("Video", session.get("usuario_logado", "unknow"), "Video Accessed")
     return render_template("video.html")
 
-# ======================================= FAZER UPLOAD ===========================
+# ======================================= Do Upload ===========================
 @app.route("/graywolf-upload", methods=["GET"])
 def show_upload_page():
     if 'usuario_logado' not in session:
@@ -318,7 +445,7 @@ def upload_file():
     return redirect("/graywolf-upload")
 
 
-# ======================================== VER UPLOADS ===============================
+# ======================================== Show Uploads files ===============================
 @app.route('/download/<path:nome_arquivo>')
 def download_arquivo(nome_arquivo):
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -356,8 +483,66 @@ def upload_files_page():
 
     registrar_log("Uploads", usuario, "Uploads Rendered")
     return render_template('uploadFiles.html', arquivos=arquivos)
+# ======================================= RENAME Files ===================================
+@app.route("/graywolf-rename-form", methods=["GET"])
+def graywolf_rename_file_form():
+    if 'usuario_logado' not in session:
+        return redirect("/")
 
-# ========================================== DELETAR ARQUIVOS ================================
+    arquivo_path = request.args.get("file_path")
+    nome_arquivo = os.path.basename(arquivo_path)
+
+    return render_template("rename_file.html", arquivo_path=arquivo_path, nome_arquivo=nome_arquivo)
+
+@app.route("/graywolf-rename-file", methods=["POST"])
+def graywolf_rename_file():
+    if 'usuario_logado' not in session:
+        return redirect("/")
+
+    usuario = session["usuario_logado"]
+    arquivo_antigo_path = request.form.get("arquivo_antigo_path")
+    novo_nome = request.form.get("novo_nome")
+
+    if not arquivo_antigo_path or not os.path.exists(arquivo_antigo_path):
+        return render_template("texts.html")
+
+    nome_arquivo_antigo = os.path.basename(arquivo_antigo_path)
+    pasta = os.path.dirname(arquivo_antigo_path)
+    novo_caminho = os.path.join(pasta, novo_nome)
+
+    # Verificações
+    if os.path.exists(novo_caminho):
+    
+        return render_template("texts.html")
+
+    if not (nome_arquivo_antigo.startswith(f"{usuario}_") or nome_arquivo_antigo.startswith("public_")):
+        return "Você não tem permissão para renomear esse arquivo", 403
+    extensao_antiga = os.path.splitext(nome_arquivo_antigo)[1]
+    extensao_nova = os.path.splitext(novo_nome)[1]
+
+    # Impede troca de extensão
+    if extensao_antiga != extensao_nova:
+        return render_template("texts.html")
+
+    # Impede troca de prefixo
+    if nome_arquivo_antigo.startswith("public_"):
+        prefixo = "public_"
+    elif nome_arquivo_antigo.startswith(f"{usuario}_"):
+        prefixo = f"{usuario}_"
+    else:
+        return render_template("texts.html")
+
+    novo_nome_limpo = prefixo + novo_nome.split(prefixo)[-1]  # garante prefixo
+
+    novo_caminho = os.path.join(pasta, novo_nome_limpo)
+
+
+    os.rename(arquivo_antigo_path, novo_caminho)
+    registrar_log("RenameFile", usuario, f"{nome_arquivo_antigo} -> {novo_nome}")
+
+    return redirect(request.referrer)
+
+# ========================================== Delete Files ================================
 @app.route("/graywolf-delete-file", methods=["GET", "POST"])
 def delete_file():
     usuario_logado = session.get('usuario_logado')
@@ -438,17 +623,7 @@ def delete_file():
 
     return redirect(request.referrer)
 
-
-# ========================================== FAZER LOGOUT ====================================
-@app.route("/graywolf-logout")
-def logout():
-    usuario = session.get('usuario_logado')
-    session.pop('usuario_logado', None)
-    agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    registrar_log("LOGOUT", session.get("usuario_logado", "unknow"), f"{usuario} left the game")
-    return redirect("/")
-
-# ===================================== VER VIDEOS ==================================
+# ===================================== Show Videos ==================================
 @app.route("/graywolf-video/<subcategoria>")
 def exibir_videos(subcategoria):
     registrar_log("Video", session.get("usuario_logado", "unknow"), f"Video: {subcategoria} Accessed")
@@ -478,7 +653,7 @@ def servir_video(subcategoria, nome_arquivo):
     caminho = os.path.join("GWFiles", "video", subcategoria)
     registrar_log("Video", session.get("usuario_logado", "unknow"), f"Video: {subcategoria}. {nome_arquivo}")
     return send_from_directory(caminho, nome_arquivo)
-# ====================================== OUVIR AUDIO ======================================
+# ====================================== Listen Audio ======================================
 @app.route("/graywolf-audio/<subcategoria>")
 def exibir_audios(subcategoria):
     registrar_log("Audio", session.get("usuario_logado", "unknow"), f"Audio: {subcategoria} Accessed")
@@ -507,7 +682,7 @@ def servir_audio(subcategoria, nome_arquivo):
     registrar_log("Audio", session.get("usuario_logado", "unknow"), f"Audio: {subcategoria}. Downloading... {nome_arquivo}")
     return send_from_directory(caminho, nome_arquivo)
 
-# ================================ VER IMAGENS ==============================
+# ================================ Show Image ==============================
 @app.route("/graywolf-photo")
 def exibir_fotos():
     registrar_log("Image", session.get("usuario_logado", "unknow"), "Image: Photo Accessed")
@@ -558,6 +733,7 @@ def servir_imagem(subcategoria, nome_arquivo):
     registrar_log("Image", session.get("usuario_logado", "unknow"), f"Image: {subcategoria}. Downloading... {nome_arquivo}")
     return send_from_directory(caminho, nome_arquivo)
 
+# =============================== Show Document ========================
 @app.route("/graywolf-<categoria>", methods=["GET"])
 def exibir_documentos_categoria(categoria):
     registrar_log("Document", session.get("usuario_logado", "unknow"), f"Document: {categoria} Accessed")
@@ -601,7 +777,8 @@ def exibir_documentos_categoria(categoria):
 
     else:
         return redirect(url_for('document_page'))
-# ============================ STATS =================================
+    
+# ============================ See Stats =================================
 @app.route("/graywolf-stats", methods=["GET"])
 def graywolf_stats():
     usuario_logado = session.get("usuario_logado")
@@ -629,8 +806,8 @@ def graywolf_stats():
         return render_template("stats.html", usuarios=lista_usuarios, formatar_tamanho=formatar_tamanho)
     else:
         return render_template("homepage.html")
-
-# ==================== FIM ============================
+    
+# ==================== End ============================
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8080)

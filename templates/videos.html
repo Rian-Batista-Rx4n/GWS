@@ -25,15 +25,20 @@
             <button class="load-video-btn" data-src="{{ url_for('servir_video', subcategoria=subcategoria, nome_arquivo=video) }}">
                 ▶ {{ video }}
             </button>
-
-            <!-- container onde o vídeo vai aparecer -->
             <div class="video-container"></div>
+            <div id="tools">
+                <form method="GET" action="{{ url_for('graywolf_rename_file_form') }}">
+                    <input type="hidden" name="file_path" value="GWFiles/video/{{ subcategoria }}/{{ video }}">
+                    <button type="submit" class="rename_button">
+                        <img src="{{ url_for('static', filename='images/rename_icon.png') }}" alt="Renomear">
+                    </button>
+                </form>
 
-            <!-- form de delete -->
-            <form method="POST" action="/graywolf-delete-file" class="delete-form" data-file-path="GWFiles/video/{{ subcategoria }}/{{ video }}">
-                <input type="hidden" name="file_path" value="">
-                <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>
-            </form>
+                <form method="POST" action="/graywolf-delete-file" class="delete-form" data-file-path="GWFiles/video/{{ subcategoria }}/{{ video }}">
+                    <input type="hidden" name="file_path" value="">
+                    <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>
+                </form>
+            </div>
         </div>
 
         {% endfor %}

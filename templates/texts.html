@@ -6,41 +6,42 @@
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
-    <link rel="stylesheet" href="../static/documents.css">
+    <link rel="stylesheet" href="../static/texts.css">
     <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
-    <title>GWS - Documents</title>
+    <title>GWS - Texts</title>
 </head>
 <body>
     <div id="topo">
-        <form action="/graywolf-document" method="GET">
+        <form action="/graywolf-text" method="GET">
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
         <h1 id="titulo">Gray Wolf System.</h1>
     </div>
     <h2 style="text-align:center;">{{ categoria.upper() }}</h2>
     <div id="botoes-caixa">
-        {% if arquivos %}
+        {% if files %}
             
             <ul id="lista-arquivos">
-                {% for arquivo in arquivos %}
+                {% for arquivo in files %}
                 <li style="display: flex; align-items: center; justify-content: space-between;">
-                    <a class="link-download" href="{{ url_for('download_arquivo', categoria=categoria, nome_arquivo=arquivo) }}" download>{{ arquivo }}</a>
+                    <a href="{{ url_for('graywolf_read_text', categoria=categoria_pasta, nome_arquivo=arquivo) }}">{{ arquivo }}</a>
 
                     <div id="tools">
                         <form method="GET" action="{{ url_for('graywolf_rename_file_form') }}">
-                            <input type="hidden" name="file_path" value="GWFiles/document/{{ categoria_pasta }}/{{ arquivo }}">
+                            <input type="hidden" name="file_path" value="GWFiles/text/{{ categoria_pasta }}/{{ arquivo }}">
                             <button type="submit" class="rename_button">
                                 <img src="{{ url_for('static', filename='images/rename_icon.png') }}" alt="Renomear">
                             </button>
                         </form>
 
                         <form method="POST" action="/graywolf-delete-file" style="display: inline;">
-                            <input type="hidden" name="file_path" value="GWFiles/document/{{ categoria_pasta }}/{{ arquivo }}">
+                            <input type="hidden" name="file_path" value="GWFiles/text/{{ categoria_pasta }}/{{ arquivo }}">
                             <button type="submit" class="botao-delete">
                                 <img id="trash_button" src="../static/images/trash_icon.png" alt="">
                             </button>
                         </form>
                     </div>
+
                 </li>
                 {% endfor %}
             </ul>

@@ -27,9 +27,9 @@
 .link-download:hover {
     text-decoration: underline;
 }
+
 .botao-delete {
     position: relative;
-    top: 100%;
     display: flex;
     background: rgb(255, 0, 0);
     border: none;
@@ -46,6 +46,35 @@
     margin-top: 1%;
 }
 
+.rename_button {
+    position: relative;
+    display: flex;
+    background: rgb(255, 255, 255);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5em;
+    text-align: center;
+    margin: auto;
+    padding: 2px;
+    margin-bottom: 10%;
+    width: 100px;
+    height: 100px;
+    margin-top: 1%;
+}
+
 #trash_button {
     width: 80%;
+    margin: auto;
+}
+#rename_button {
+    width: 80%;
+    margin: auto;
+}
+
+#tools {
+    display: inline-block;
+    display: flex;
+    gap: 5%;
 }

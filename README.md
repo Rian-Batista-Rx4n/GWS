@@ -1,4 +1,4 @@
-# 🐺 Gray Wolf System – v0.9.4 Beta
+# 🐺 Gray Wolf System – v0.9.5 Beta
 
 A personal file management system built with Flask, featuring audio, video, image players and more — all accessible through a responsive web interface.
 
@@ -62,33 +62,53 @@ is a lightweight web application built with **Flask (Python)**, designed to turn
 
 ---
 
-## 🚧 Status: Beta v0.9.4
+## 🚧 Status: Beta v0.9.5
 
-✅ Available Features:
+### ✅ Available Features
 
-- [x] File upload and download
-- [x] Video playback
+- [x] Upload and download files
+- [x] Video playback (MP4)
 - [x] Image viewer
-- [x] Audio player
+- [x] Audio player (MP3, WAV)
 - [x] Document viewer (PDF, DOC, XLS, PPT)
-- [x] Recently uploaded files list
-- [x] Show files only if public or owned by user
-- [x] User registration system (Admin or Regular User)
-- [x] **File deletion system (with user quota updates)**
-- [x] **User statistics page (visible only to Admin)**
-- [x] System logs (action logging system)
-- [x] Deny some reserved usernames
-- [x] **Logout system**
-- [x] **Back button redesigned (icon in top-left corner)**
-- [x] **Improved installer (setup admin on first run, update system without losing personal files/config)**
+- [x] Text file viewer (`.txt`)
+- [x] Recently uploaded files list (per user)
+- [x] Show files only if public or owned by the user
+- [x] Rename files (video, document, text) — keeps owner/public prefix
+- [x] File deletion system with size tracking per user
+- [x] User registration system (Admin or Regular)
+- [x] System logs (user actions, access attempts, uploads)
+- [x] Reserved usernames protection
+- [x] Logout button (top-right)
+- [x] Back button redesigned (top-left icon)
+- [x] System Status Page (shows memory & usage; admin-only)
+- [x] Installer with admin setup and update mode (no data loss)
 
-🛠️ Planned Features:
+## 🛠️ Planned Features (Coming Soon)
 
-- [ ] Real-time chat
-- [ ] Web Terminal (remote system access)
-- [ ] Trash bin (soft delete / file recovery)
-- [ ] Secure login system with hashed passwords
-- [ ] Read and edit .txt files
+- [ ] **Edit `.txt` files directly from browser**
+- [ ] **Start development of real-time chat**
+- [ ] **Add base rename logic improvements**  
+  - Show only the clean file name (hiding `public_` or `owner_` prefix in UI)
+- [ ] **File permission system** (similar to Linux: read/delete/upload control)
+  - Add new "Guest" user level (view-only)
+- [ ] **Per-user storage quota configuration** (e.g., 50GB per user from 1TB)
+- [ ] **Show file size in uploads tab**
+  - Or via an **Info button** to view file metadata
+- [ ] **Edit documents online (DOC/XLS)**  
+  - Investigate possible APIs or JS-based editors (especially for Excel)
+- [ ] **Improve security**  
+  - Basic brute-force protection  
+  - Optional login persistence or 2FA/email verification
+- [ ] **Better video support** (MKV and other formats)
+- [ ] **Add search, filters, and sort by name/date/size**
+- [ ] **Admin web terminal** (remote control of host machine)
+- [ ] **Trash bin system** (soft delete with restore)
+- [ ] **Enhanced system stats page**  
+  - CPU, RAM, Storage usage, etc.
+- [ ] **Log Viewer page** (linked from admin stats panel)
+- [ ] **Music player UI** for `AUDIO >> MUSIC`  
+  - Style similar to YouTube Music or Spotify
 
 ---
 
@@ -112,7 +132,12 @@ python3 main.py
 ```
 ### 🔽 Download Installers
 - [🇺🇸 install_EN.sh](https://github.com/Rian-Batista-Rx4n/GWS/raw/main/install_EN.sh) — Installer script in English
-- [🇧🇷 install_PT.sh](https://github.com/Rian-Batista-Rx4n/GWS/raw/main/install_PT.sh) — Script de instalação em português  
+- [🇧🇷 install_PT.sh](https://github.com/Rian-Batista-Rx4n/GWS/raw/main/install_PT.sh) — Script de instalação em português
+
+```bash
+chmod +x install_(LANGUAGE).sh
+./install_(LAGUAGE).sh
+```
 ---
 ## 🧾 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
