@@ -1,0 +1,55 @@
+#text {
+    width: 90%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    background-color: white;
+    color: black;
+    border-radius: 15px 15px 15px 15px;
+    margin: auto;
+    box-shadow: 5px 5px 10px black;
+    padding: 1em;
+}
+
+#font_tools {
+    position: absolute;
+    right: 1em;
+}
+
+#box {
+    width: 90%;
+    padding: 1%;
+    margin: auto;
+    background-color: rgb(32, 32, 32);
+    border-radius: 5px 5px 5px 5px;
+    padding-bottom: 1%;
+}
+
+#save_button {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    margin: 1%;
+}
+
+#save_icon {
+    width: 80%;
+}
+
+#upper, #lower {
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    cursor: pointer;
+    gap: 1%;
+    background-color: white;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 5px 5px 10px black;
+}
+#upper_icon, #lower_icon {
+    width: 100%;
+}
+
+#upper:hover, #lower:hover {
+    border-color: rgb(79, 199, 255);
+    border-style: solid;
+    border-width: 1px;
+}

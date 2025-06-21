@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/base_style.css">
+    <link rel="stylesheet" href="../static/backButton_style.css">
+    <link rel="stylesheet" href="../static/logs.css">
+    <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
+    <title>GWS - Logs</title>
+</head>
+<body>
+    <div id="topo">
+        <form action="/graywolf-back" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
+
+    <div id="logsBox">
+        <h2>Logs</h2>
+        <div id="logs">
+            {% for log in arquivos_log %}
+            <p><a href="{{ url_for('graywolf_log_view', file=log) }}">{{ log }}</a><br></p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="space"></div>
+
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,17 @@
+#box {
+    width: 90%;
+    border-radius: 5px 5px 5px 5px;
+    padding: 1em;
+    background-color: rgb(62, 62, 62);
+    margin: auto;
+
+}
+
+li {
+    margin: 1em;
+    border-color: aqua;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px 10px 10px 10px;
+    padding: 1%;
+}

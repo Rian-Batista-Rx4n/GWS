@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/backButton_style.css">
+    <link rel="stylesheet" href="../static/base_style.css">
+    <link rel="stylesheet" href="../static/buttons_style.css">
+    <link rel="stylesheet" href="../static/info_file.css">
+    <title>File Info</title>
+</head>
+<body>
+    <div id="topo">
+        <form action="/graywolf-uploadFiles" method="GET">
+            <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+    </div>
+
+    <h1>File Info</h1>
+
+    <div id="box">
+        <ul>
+            <li><strong>Path:</strong> {{ info.path }}</li>
+            <li><strong>Size:</strong> {{ info.size_kb }} KB</li>
+            <li><strong>Created:</strong> {{ info.created }}</li>
+            <li><strong>Last Modified:</strong> {{ info.modified }}</li>
+            <li><strong>Absolute Path:</strong> {{ info.absolute_path }}</li>
+            <li><strong>Readable:</strong> {{ info.is_readable }}</li>
+            <li><strong>Writable:</strong> {{ info.is_writable }}</li>
+        </ul>
+    </div>
+
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>  
+</body>
+</html>

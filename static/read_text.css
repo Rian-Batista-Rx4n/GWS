@@ -7,18 +7,6 @@
     margin-bottom: 10em;
 }
 
-#text {
-    background-color: white;
-    color: black;
-    border-radius: 5px 5px 5px 5px;
-    margin: auto;
-    width: 90%;
-    padding: 1em;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    box-shadow: 5px 5px 10px black;
-    font-size: 200%;
-}
-
 .botao-delete {
     width: 75px;
     height: 75px;

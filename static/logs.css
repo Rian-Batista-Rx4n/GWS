@@ -1,0 +1,48 @@
+#logsBox {
+    width: 90%;
+    margin: auto;
+    background-color: rgb(64, 64, 64);
+    padding: 1em;
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    margin-top: 1em;
+}
+
+h2 {
+    font-size: 150%;
+    border-radius: 50px 50px 50px 50px;
+    width: 25%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+    margin: auto;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+p, a {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 100%;
+    margin-top: 1%;
+    color: white;
+    text-decoration-line: none;
+}
+
+a:hover {
+    color: aqua;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+}
+
+#space {
+    margin-bottom: 10em;
+}
+
+#logs {
+    text-align: center;
+    margin: auto;
+}

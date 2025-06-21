@@ -3,7 +3,6 @@
     padding-right: 2px;
     padding-left: 2px;
     padding-bottom: 1px;
-    position: absolute;
     color: white;
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -11,9 +10,6 @@
     border-style: solid;
     border-width: 1px;
     border-color: white;
-    margin-top: 1em;
-    margin-left: 10%;
-    margin-right: 10%;
 }
 
 #users_stats table {
@@ -21,7 +17,6 @@
     border-collapse: collapse;
     margin-top: 10px;
     padding: 1px;
-    
 }
 
 #users_stats th, #users_stats td {
@@ -38,4 +33,64 @@
     background-color: #333;
     color: #fff;
     
+}
+
+#server_stats {
+    background-color: #222;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 150%;
+}
+
+#server_stats ul {
+    list-style: none;
+    padding: 0;
+}
+
+#server_stats li {
+    padding: 0.5em 0;
+    border-bottom: 1px solid #444;
+}
+
+h2 {
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    width: 35%;
+    margin: auto;
+    margin-top: 1em;
+    border-radius: 50px 50px 50px 50px;
+}
+
+#stats {
+    margin-bottom: 100%;
+}
+
+#space {
+    margin-bottom: 10em;
+}
+
+#tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    right: 1%;
+    top: 1.7em;
+    transform: translateY(-50%);
+}
+
+.tool_button {
+    cursor: pointer;
+    padding: 0;
+}
+
+#logs_icon, #config_icon {
+    width: 42px;
 }

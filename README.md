@@ -1,4 +1,4 @@
-# 🐺 Gray Wolf System – v0.9.5 Beta
+# 🐺 Gray Wolf System – v0.9.6 Beta
 
 A personal file management system built with Flask, featuring audio, video, image players and more — all accessible through a responsive web interface.
 
@@ -8,11 +8,11 @@ A personal file management system built with Flask, featuring audio, video, imag
 - [Gray Wolf System](#-gray-wolf-system)
 - [Project Goals](#-project-goals)
 - [How to Use](#-how-to-use)
-- [Status](#-status-beta-v094)
+- [Status](#-status-beta-v096)
 - [Technologies Used](#️-technologies-used)
 - [Installation Guide](#-installation-guide)
-  - [Cloning the repository](#cloning-the-repository)
-  - [Installing with installer script](#download-installers)
+  - [Cloning the repository](#-cloning-the-repository)
+  - [Installing with installer script](#-download-installers)
 - [License](#-license)
 
 ---
@@ -62,7 +62,7 @@ is a lightweight web application built with **Flask (Python)**, designed to turn
 
 ---
 
-## 🚧 Status: Beta v0.9.5
+## 🚧 Status: Beta v0.9.6
 
 ### ✅ Available Features
 
@@ -83,18 +83,18 @@ is a lightweight web application built with **Flask (Python)**, designed to turn
 - [x] Back button redesigned (top-left icon)
 - [x] System Status Page (shows memory & usage; admin-only)
 - [x] Installer with admin setup and update mode (no data loss)
+- [x] Edit `.txt` files directly from browser
+- [x] Add base rename logic improvements
+- [x] Info button to view file metadata
+- [x] Enhanced system stats page
+- [x] **Log Viewer page** (linked from admin stats panel)
 
 ## 🛠️ Planned Features (Coming Soon)
 
-- [ ] **Edit `.txt` files directly from browser**
 - [ ] **Start development of real-time chat**
-- [ ] **Add base rename logic improvements**  
-  - Show only the clean file name (hiding `public_` or `owner_` prefix in UI)
 - [ ] **File permission system** (similar to Linux: read/delete/upload control)
   - Add new "Guest" user level (view-only)
 - [ ] **Per-user storage quota configuration** (e.g., 50GB per user from 1TB)
-- [ ] **Show file size in uploads tab**
-  - Or via an **Info button** to view file metadata
 - [ ] **Edit documents online (DOC/XLS)**  
   - Investigate possible APIs or JS-based editors (especially for Excel)
 - [ ] **Improve security**  
@@ -104,9 +104,6 @@ is a lightweight web application built with **Flask (Python)**, designed to turn
 - [ ] **Add search, filters, and sort by name/date/size**
 - [ ] **Admin web terminal** (remote control of host machine)
 - [ ] **Trash bin system** (soft delete with restore)
-- [ ] **Enhanced system stats page**  
-  - CPU, RAM, Storage usage, etc.
-- [ ] **Log Viewer page** (linked from admin stats panel)
 - [ ] **Music player UI** for `AUDIO >> MUSIC`  
   - Style similar to YouTube Music or Spotify
 

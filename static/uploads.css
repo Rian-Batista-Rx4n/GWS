@@ -1,102 +1,114 @@
-
 .arquivo {
     background-color: #333;
     margin: 0.5em auto;
-    width: 90%;
-    height: 3em;
-    padding: 10px;
+    width: 95%;
+    padding: 1%;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: nowrap; /* linha única em telas grandes */
+    gap: 1%;
+    overflow-x: auto;
 }
-.arquivo .botao-delete {
-    display: none;
+
+.arquivo:hover {
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
+}
+
+/* Nome do arquivo */
+.arquivo span {
+    flex: 2;
+    word-break: break-word;
+    color: white;
+}
+
+/* Link de download */
+.arquivo a {
+    flex: 1;
+    color: cyan;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0.5em;
+}
+
+.arquivo a:hover {
+    text-decoration: underline;
+}
+
+/* Bloco de botões */
+#tools {
+    flex: 1.5;
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+/* Botões padrão */
+.botao-delete, .rename_button, .info_button {
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-.arquivo:hover .botao-delete{
-    display: flex;
-    opacity: 100%;
-}
-.arquivo:hover .rename_button{
-    opacity: 100%;
-}
-.arquivo:hover {
-    border-style: solid;
-    border-width: 2px;
-    border-color: white;
-}
-
-a {
-    color: cyan;
-    text-decoration: none;
-    font-weight: bold;
-    margin: 5%;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-span {
-    width: 80%;
-}
-
-#space {
-    margin-bottom: 5em;
-    width: 10%;
-    height: 1em;
-}
-
 .botao-delete {
-    position: relative;
-    display: flex;
-    background: rgb(255, 0, 0);
+    background: red;
     border: none;
     color: white;
-    border-radius: 5px;
-    padding: 2px;
     cursor: pointer;
-    text-align: center;
-    margin: auto;
-    width: 60px;
-    height: 60px;
-    margin-top: 1%;
-    margin-bottom: 25%;
 }
 
-.rename_button {
-    position: relative;
-    display: flex;
-    background: rgb(255, 255, 255);
+.rename_button, .info_button {
+    background: white;
     border: none;
-    color: white;
-    border-radius: 5px;
     cursor: pointer;
-    text-align: center;
-    margin: auto;
-    padding: 2px;
-    width: 60px;
-    height: 60px;
-    margin-top: 1%;
-    opacity: 0;
 }
 
-#trash_button {
-    width: 80%;
-    margin: auto;
-}
-#rename_button {
-    width: 80%;
-    margin: auto;
+/* Hover para exibir os botões */
+.arquivo:hover .botao-delete,
+.arquivo:hover .rename_button,
+.arquivo:hover .info_button {
+    opacity: 1;
 }
 
-#tools {
-    display: inline-block;
-    display: flex;
-    gap: 5%;
-    justify-content: center;
-    margin-top: 1%;
+@media (max-width: 600px) {
+    .arquivo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5em;
+    }
+
+    #tools {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .botao-delete, .rename_button, .info_button {
+        width: 36px;
+        height: 36px;
+    }
+
+    a {
+        padding: 0.25em;
+        width: 100%;
+        text-align: left;
+    }
+
+    span {
+        width: 100%;
+    }
+}
+
+body {
+    overflow-x: hidden;
 }

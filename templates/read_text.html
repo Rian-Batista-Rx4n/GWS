@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='buttons_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='read_text.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font_style_conf.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/GrayWolf_512png.png') }}" type="image/x-icon">
     
     <title>GWS - Texts</title>
@@ -19,6 +20,10 @@
             <button id="backButton" type="submit"><img src="{{ url_for('static', filename='images/backButton_icon.png') }}" alt=""></button>
         </form>
         <h1 id="titulo">Gray Wolf System.</h1>
+        <div id="font_tools">
+            <div id="upper"><img id="upper_icon" src="{{ url_for('static', filename='images/font_uppercase_icon.png') }}" alt=""></div>
+            <div id="lower"><img id="lower_icon" src="{{ url_for('static', filename='images/font_lowercase_icon.png') }}" alt=""></div>
+        </div>
     </div>
     <h2 style="text-align:center;">{{ file_name.upper() }}</h2>
     <div id="box">
@@ -30,15 +35,15 @@
                 </button>
             </form>
         </div>
-        
-        <div id="text">
-            <pre style="white-space: pre-wrap; word-wrap: break-word;">{{ conteudo | e }}</pre>
-        </div>
+        <pre id="text" style="white-space: pre-wrap; word-wrap: break-word;">{{ conteudo | e }}</pre>
     </div>
 
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>
+
+    <script src="{{ url_for('static', filename='font_size_buttons.js') }}"></script>
+
 </body>
 
 </html>

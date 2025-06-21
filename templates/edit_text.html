@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GWS - Edit</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='backButton_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='buttons_style.css') }}">
+    <link rel="stylesheet" href="../static/font_style_conf.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/GrayWolf_512png.png') }}" type="image/x-icon">
+</head>
+<body>
+    <div id="topo">
+        <form action="/graywolf-text" method="GET">
+            <button id="backButton" type="submit"><img src="{{ url_for('static', filename='images/backButton_icon.png') }}" alt=""></button>
+        </form>
+        <h1 id="titulo">Gray Wolf System.</h1>
+        <div id="font_tools">
+            <div id="upper"><img id="upper_icon" src="../static/images/font_uppercase_icon.png" alt=""></div>
+            <div id="lower"><img id="lower_icon" src="../static/images/font_lowercase_icon.png" alt=""></div>
+        </div>
+    </div>
+
+    <h1 style="text-align:center;">Edit Text File</h1>
+    <div id="box">
+        <form method="POST" action="/graywolf-save-text">
+            <input type="hidden" name="file_path" value="{{ file_path }}">
+            <textarea id="text" name="new_content" rows="20">{{ content }}</textarea><br><br>
+            <button id="save_button" type="submit" class="save_button"><img id="save_icon" src="../static/images/save_icon.png" alt="">Save Changes</button>
+        </form>
+    </div>
+    
+    <div id="roda_pe">
+        <p>Copyright GrayWolf 2025.</p>
+    </div>
+
+    <script src="../static/font_size_buttons.js"></script>
+</body>
+</html>

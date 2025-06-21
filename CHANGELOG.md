@@ -1,6 +1,20 @@
 # Changelog
 
 All major changes to this project will be documented here.
+
+## [0.9.6] - 2025-06-21
+### Added
+- File information is now viewable in the Uploads section
+- You can now edit .txt files directly in the browser and save changes
+- Font size adjustment (increase/decrease) in the text reader and .txt editor
+- Added a Logs button on the Stats page to view server logs
+- Server resource stats are now visible: RAM, CPU, Disk usage, Uptime, and System load
+
+### Changed
+- Minor updates and improvements to the CSS (still in progress)
+
+---
+
 ## [0.9.5] - 2025-06-14
 ### Added
 - Text viewer system by category and type (e.g., organized access to .txt files)

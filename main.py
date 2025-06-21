@@ -8,6 +8,8 @@ from datetime import datetime
 import getpass
 import os, json
 import json
+import time
+import psutil
 
 # =============================================================
 # --------------------- FUNCTIONS -----------------------------
@@ -22,7 +24,6 @@ def registrar_log(acao, usuario="SYSTEM", detalhes=""):
 
 #Funtion to create the first ADMIN of the system
 def garantir_usuario_admin():
-    os.system('cls' if os.name == 'nt' else 'clear')
     if not os.path.exists(users_json_path):
         print("⚠️ No users data! please create a ADMIN user now!")
 
@@ -161,6 +162,26 @@ def pagina_nao_encontrada(error):
 def graywolf_back():
     registrar_log("Back Button", session.get("usuario_logado", "unknow"), "Back to the HomePage")
     return render_template("homepage.html")
+
+# ===================== Info Button =======================
+@app.route('/graywolf-info-file', methods=['GET'])
+def graywolf_info_file():
+    file_path = request.args.get('file_path')
+    
+    if not file_path or not os.path.exists(file_path):
+        return "Arquivo não encontrado", 404
+
+    info = {
+        "path": file_path,
+        "size_kb": round(os.path.getsize(file_path) / 1024, 2),
+        "created": time.ctime(os.path.getctime(file_path)),
+        "modified": time.ctime(os.path.getmtime(file_path)),
+        "absolute_path": os.path.abspath(file_path),
+        "is_readable": os.access(file_path, os.R_OK),
+        "is_writable": os.access(file_path, os.W_OK),
+    }
+
+    return render_template('info_file.html', info=info)
 
 # ========================================== Do Logout ====================================
 @app.route("/graywolf-logout")
@@ -363,6 +384,48 @@ def show_video_page():
         return redirect("/")
     registrar_log("Video", session.get("usuario_logado", "unknow"), "Video Accessed")
     return render_template("video.html")
+
+# ==================================== EDIT Text ==================================
+@app.route("/graywolf-edit-text", methods=["POST"])
+def graywolf_edit_text():
+    file_path = request.form.get("file_path")
+    if not file_path or not os.path.exists(file_path):
+        flash("File not found or invalid path.")
+        return redirect(url_for("graywolf-homapage"))
+    
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    return render_template("edit_text.html", file_path=file_path, content=content)
+
+@app.route("/graywolf-save-text", methods=["POST"])
+def graywolf_save_text():
+    file_path = request.form.get("file_path")
+    new_content = request.form.get("new_content")
+
+    if not file_path or not os.path.exists(file_path):
+        flash("Error: file not found.")
+        return redirect(url_for("graywolf_homepage"))  # corrigido underline
+
+    try:
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(new_content)
+        flash("Text saved successfully.")
+    except Exception as e:
+        flash(f"Error saving file: {e}")
+        return redirect(url_for("graywolf_homepage"))
+
+    # 🧠 Aqui você extrai categoria e nome_arquivo a partir do path completo
+    # Exemplo de path: GWFiles/text/note/arquivo.txt
+    partes = file_path.split("/")
+    if len(partes) >= 4:
+        categoria = partes[2]
+        nome_arquivo = partes[3]
+    else:
+        flash("Invalid file path format.")
+        return redirect(url_for("graywolf_homepage"))
+
+    return redirect(url_for("graywolf_read_text", categoria=categoria, nome_arquivo=nome_arquivo))
 
 # ======================================= Do Upload ===========================
 @app.route("/graywolf-upload", methods=["GET"])
@@ -801,12 +864,79 @@ def graywolf_stats():
                 "criado_em": dados.get("criado_em", "???"),
                 "armazenamento_usado": dados.get("armazenamento_usado", 0)
             })
+        
+            # === CPU ===
+            cpu_percent = psutil.cpu_percent(interval=1)
+            load_avg = psutil.getloadavg()  # (1min, 5min, 15min)
+
+            # === RAM ===
+            mem = psutil.virtual_memory()
+            ram_total = mem.total
+            ram_usado = mem.used
+            ram_livre = mem.available
+            ram_percent = mem.percent
+
+            # === Disco ===
+            disco = psutil.disk_usage('/')
+            disco_total = disco.total
+            disco_usado = disco.used
+            disco_livre = disco.free
+            disco_percent = disco.percent
+
+            # === Uptime ===
+            uptime_segundos = int(psutil.boot_time())
+            uptime = datetime.now() - datetime.fromtimestamp(uptime_segundos)
+
+        
 
         registrar_log("Stats", session.get("usuario_logado", "unknow"), "Admin Access")
-        return render_template("stats.html", usuarios=lista_usuarios, formatar_tamanho=formatar_tamanho)
+        return render_template(
+            "stats.html",
+            usuarios=lista_usuarios,
+            formatar_tamanho=formatar_tamanho,
+            cpu_percent=cpu_percent,
+            load_avg=load_avg,
+            ram_total=ram_total,
+            ram_usado=ram_usado,
+            ram_livre=ram_livre,
+            ram_percent=ram_percent,
+            disco_total=disco_total,
+            disco_usado=disco_usado,
+            disco_livre=disco_livre,
+            disco_percent=disco_percent,
+            uptime=str(uptime).split('.')[0]  # remove microsegundos
+        )
     else:
         return render_template("homepage.html")
-    
+
+# ==================== LOGS PAGE ===========================
+@app.route("/graywolf-logs", methods=["GET"])
+def graywolf_logs():
+    try:
+        arquivos_log = [f for f in os.listdir(LOG_DIR) if f.endswith(".log")]
+
+        # Ordena os arquivos do mais recente para o mais antigo com base na modificação
+        arquivos_log.sort(key=lambda f: os.path.getmtime(os.path.join(LOG_DIR, f)), reverse=True)
+
+        return render_template("logs.html", arquivos_log=arquivos_log)
+    except Exception as e:
+        return redirect(url_for("graywolf_stats"))
+
+@app.route("/graywolf-log-view", methods=["GET"])
+def graywolf_log_view():
+    nome_arquivo = request.args.get("file")
+    caminho_log = os.path.join(LOG_DIR, nome_arquivo)
+
+    if not os.path.exists(caminho_log):
+        return redirect(url_for("graywolf_logs"))
+
+    try:
+        with open(caminho_log, "r", encoding="utf-8") as f:
+            conteudo = f.read()
+        return render_template("log_view.html", nome_arquivo=nome_arquivo, conteudo=conteudo)
+    except Exception as e:
+        return redirect(url_for("graywolf_logs"))
+
 # ==================== End ============================
 
 if __name__ == "__main__":

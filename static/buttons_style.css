@@ -28,10 +28,14 @@ button {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.521);
     transition: transform 0.2s;
     margin: auto;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0);
+    border-width: 2px;
 }
 
 button:hover {
     transform: scale(1.05);
+    border-color: rgb(61, 219, 255);
 }
 .text_button {
     position: static;

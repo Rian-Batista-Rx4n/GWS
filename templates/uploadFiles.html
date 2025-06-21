@@ -23,6 +23,12 @@
                 <span>{{ arquivo }}</span>
                 <a href="{{ url_for('download_arquivo', nome_arquivo=arquivo) }}">Download</a>
                 <div id="tools">
+                    <form action="{{ url_for('graywolf_info_file') }}" method="GET">
+                        <input type="hidden" name="file_path" value="GWFiles{{ categoria_pasta }}/{{ arquivo }}">
+                        <button type="submit" class="info_button">
+                            <img src="{{ url_for('static', filename='images/info_icon.png') }}" alt="Info">
+                        </button>
+                    </form>
                     <form method="GET" action="{{ url_for('graywolf_rename_file_form') }}">
                         <input type="hidden" name="file_path" value="GWFiles/geral/{{ categoria_pasta }}/{{ arquivo }}">
                         <button type="submit" class="rename_button">
@@ -30,9 +36,9 @@
                         </button>
                     </form>
                     <form method="POST" action="/graywolf-delete-file">
-                    <input type="hidden" name="file_path" value="{{ arquivo }}">
-                    <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>
-                </form>
+                        <input type="hidden" name="file_path" value="{{ arquivo }}">
+                        <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>
+                    </form>
                 </div>
             </div>
         {% endfor %}

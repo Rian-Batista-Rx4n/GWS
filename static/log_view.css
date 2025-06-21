@@ -1,0 +1,14 @@
+#viewLogs {
+    margin-top: 1em;
+    font-size: 150%;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h2 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+}
+
+#space {
+    margin-bottom: 10em;
+}

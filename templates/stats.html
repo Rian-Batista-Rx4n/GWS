@@ -15,32 +15,65 @@
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
         <h1 id="titulo">Gray Wolf System.</h1>
-    </div>
-    <div id="users_stats">
-        <h2>Users Stats</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Nivel</th>
-                    <th>Creted in</th>
-                    <th>Using</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in usuarios %}
-                <tr>
-                    <td>{{ user.nome }}</td>
-                    <td>{{ user.nivel }}</td>
-                    <td>{{ user.criado_em }}</td>
-                    <td>{{ formatar_tamanho(user.armazenamento_usado) }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <div><p>~ Gray Wolf ~</p></div>
+
+        <div id="tools">
+            <form action="/graywolf-logs" method="GET">
+                <button id="logsButton" class="tool_button">
+                    <img id="logs_icon" src="../static/images/logs_icon.png" alt="Logs">
+                </button>
+            </form>
+            <form action="/graywolf-config" method="GET">
+                <button id="configButton" class="tool_button">
+                    <img id="config_icon" src="../static/images/config_icon.png" alt="Config">
+                </button>
+            </form>
+        </div>
+
     </div>
 
+    </div id="stats">
+        <div id="server_stats">
+        <h2>Server Status</h2>
+        <ul>
+            <li><strong>CPU Usage:</strong> {{ cpu_percent }}%</li>
+            <li><strong>Load Average:</strong> {{ load_avg[0] }} (1min), {{ load_avg[1] }} (5min), {{ load_avg[2] }} (15min)</li>
+
+            <li><strong>RAM:</strong> {{ formatar_tamanho(ram_usado) }} used / {{ formatar_tamanho(ram_total) }} total ({{ ram_percent }}%)</li>
+            <li><strong>RAM Free:</strong> {{ formatar_tamanho(ram_livre) }}</li>
+
+            <li><strong>Disk:</strong> {{ formatar_tamanho(disco_usado) }} used / {{ formatar_tamanho(disco_total) }} total ({{ disco_percent }}%)</li>
+            <li><strong>Disk Free:</strong> {{ formatar_tamanho(disco_livre) }}</li>
+
+            <li><strong>Uptime:</strong> {{ uptime }}</li>
+        </ul>
+
+        <div id="users_stats">
+            <h2>Users Stats</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Nivel</th>
+                        <th>Creted in</th>
+                        <th>Using</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in usuarios %}
+                    <tr>
+                        <td>{{ user.nome }}</td>
+                        <td>{{ user.nivel }}</td>
+                        <td>{{ user.criado_em }}</td>
+                        <td>{{ formatar_tamanho(user.armazenamento_usado) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div><p>~ Gray Wolf ~</p></div>
+        </div>
+    </div>
+
+    <div id="space"></div>
 
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
