@@ -1,9 +1,9 @@
 #backButton {
     border-radius: 10px 10px 10px 10px;
-    width: 4em;
-    height: 4em;
+    width: 3em;
+    height: 3em;
     position: absolute;
-    top: 1px;
+    top: 10%;
     left: 1%;
 }
 

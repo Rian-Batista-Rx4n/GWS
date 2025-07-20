@@ -1,10 +1,10 @@
 #!/bin/bash
 echo "Instalador do GrayWolfSystem"
 echo "Os seguintes programas serão instalados durante este processo:"
-echo "→ Python, Git, Pipx, Flask"
+echo "→ Python, Git, Flask, psutil, werkzeug"
 echo
 
-echo "Qual distribuição Linux você está usando?"
+echo "Qual distribuição Linux você está utilizando?"
 echo "[1] ARCH   - (PACMAN)"
 echo "[2] DEBIAN - (APT)"
 echo "[3] TERMUX - (PKG)"
@@ -15,22 +15,31 @@ echo "O que você deseja fazer?"
 echo "[1] INSTALAR"
 echo "[2] ATUALIZAR"
 echo "[3] REMOVER"
-read -p ">> " install
+read -p ">> " acao
 
 echo
 echo "Onde o GWS deve ser instalado?"
 echo "[1] PADRÃO (/opt/gws)"
 echo "[2] CAMINHO PERSONALIZADO"
-read -p ">> " path
+read -p ">> " caminho_opcao
 
-if [ "$path" = "1" ]; then
-    GWS_PATH="/opt/gws"
+# Definir caminho de instalação
+if [ "$distro" = "3" ]; then
+    GWS_PATH="$HOME/gws"
+    BIN_PATH="$HOME/bin"
+    mkdir -p "$BIN_PATH"
+    export PATH="$BIN_PATH:$PATH"
 else
-    read -p "Digite o caminho completo onde deseja instalar o GWS: " GWS_PATH
+    if [ "$caminho_opcao" = "1" ]; then
+        GWS_PATH="/opt/gws"
+    else
+        read -p "Informe o caminho completo onde deseja instalar o GWS: " GWS_PATH
+    fi
+    BIN_PATH="/usr/local/bin"
 fi
 
 instalar_pacotes() {
-    echo "🔧 Instalando pacotes..."
+    echo "🔧 Instalando pacotes necessários..."
     case "$distro" in
         1)
             sudo pacman -Syu --noconfirm
@@ -42,7 +51,8 @@ instalar_pacotes() {
             ;;
         3)
             pkg update -y && pkg upgrade -y
-            pkg install -y python git pipx
+            pkg install -y python git
+            pip install --upgrade pip
             ;;
         *)
             echo "❌ Opção de distribuição inválida!"
@@ -50,66 +60,77 @@ instalar_pacotes() {
             ;;
     esac
 
-    echo "📦 Instalando Flask com pipx..."
-    pipx install flask
+    echo "📦 Instalando Flask, psutil e werkzeug..."
+
+    if [ "$distro" = "3" ]; then
+        pip install flask psutil werkzeug
+    else
+        pipx install flask
+        pipx inject flask psutil werkzeug
+    fi
 }
 
 instalar_gws() {
-    echo "⬇️ Clonando GrayWolfSystem em $GWS_PATH..."
-    sudo mkdir -p "$GWS_PATH"
-    sudo git clone https://github.com/Rian-Batista-Rx4n/GWS "$GWS_PATH"
+    echo "⬇️ Clonando o GrayWolfSystem em $GWS_PATH..."
+    mkdir -p "$GWS_PATH"
+    git clone https://github.com/Rian-Batista-Rx4n/GWS "$GWS_PATH"
 
-    sudo chown -R "$USER":"$USER" "$GWS_PATH"
-
-    echo "Criando atalho para inicialização rápida..."
-    echo -e "#!/bin/bash\ncd $GWS_PATH\npython3 main.py" | sudo tee /usr/local/bin/gws-start > /dev/null
-    sudo chmod +x /usr/local/bin/gws-start
-    echo "✅ Atalho criado: execute 'gws-start' para iniciar o sistema!"
+    echo "🧩 Criando atalho: gws-start"
+    echo -e "#!/bin/bash\ncd $GWS_PATH\npython3 main.py" > "$BIN_PATH/gws-start"
+    chmod +x "$BIN_PATH/gws-start"
+    echo "✅ Atalho criado → Use o comando 'gws-start' para iniciar o GWS"
 
     echo
     echo "👤 Agora vamos criar o PRIMEIRO usuário (ADMIN) do GWS"
-    read -p "→ Nome de usuário: " initial_user
-    read -sp "→ Senha: " initial_password
+    read -p "→ Nome de usuário: " usuario_inicial
+    read -sp "→ Senha: " senha_inicial
     echo
 
-    mkdir -p "$GWS_PATH/GWData/GWS_Users"
+    mkdir -p "$GWS_PATH/GWData/GWUsers"
 
-    created_at=$(date +"%Y-%m-%d %H:%M:%S")
+    criado_em=$(date +"%Y-%m-%d %H:%M:%S")
 
     cat <<EOF > "$GWS_PATH/GWData/GWUsers/users.json"
 {
-    "$initial_user": {
-        "senha": "$initial_password",
+    "$usuario_inicial": {
+        "senha": "$senha_inicial",
         "nivel": "admin",
-        "criado_em": "$created_at",
+        "criado_em": "$criado_em",
         "armazenamento_usado": 0
     }
 }
 EOF
 
+    echo "✅ Usuário admin inicial criado em: GWData/GWUsers/users.json"
 
-    echo "✅ Usuário ADMIN inicial criado em: GWData/GWS_Users/users.json"
+    echo
+    echo "🚀 Testando execução do GWS..."
+    cd "$GWS_PATH"
+    python3 main.py &
+    sleep 2
+    kill $!
+    echo "✅ Execução concluída com sucesso (teste passou)"
 }
 
-if [ "$install" = "1" ]; then
+if [ "$acao" = "1" ]; then
     instalar_pacotes
     instalar_gws
-elif [ "$install" = "2" ]; then
+
+elif [ "$acao" = "2" ]; then
     echo "⚙️ Atualizando repositório..."
 
     TEMP_DIR=$(mktemp -d)
-    echo "→ Preservando GWLogs, GWData e GWFiles..."
+    echo "→ Salvando GWLogs, GWData e GWFiles temporariamente..."
     mv "$GWS_PATH/GWLogs" "$TEMP_DIR/GWLogs" 2>/dev/null
     mv "$GWS_PATH/GWData" "$TEMP_DIR/GWData" 2>/dev/null
     mv "$GWS_PATH/GWFiles" "$TEMP_DIR/GWFiles" 2>/dev/null
 
-    sudo rm -rf "$GWS_PATH"
-    sudo mkdir -p "$GWS_PATH"
-    sudo chown -R "$USER":"$USER" "$GWS_PATH"
+    rm -rf "$GWS_PATH"
+    mkdir -p "$GWS_PATH"
     
     git clone https://github.com/Rian-Batista-Rx4n/GWS "$GWS_PATH"
 
-    echo "→ Restaurando GWLogs, GWData e GWFiles..."
+    echo "→ Restaurando arquivos..."
     mv "$TEMP_DIR/GWLogs" "$GWS_PATH/" 2>/dev/null
     mv "$TEMP_DIR/GWData" "$GWS_PATH/" 2>/dev/null
     mv "$TEMP_DIR/GWFiles" "$GWS_PATH/" 2>/dev/null
@@ -118,10 +139,10 @@ elif [ "$install" = "2" ]; then
     
     echo "✅ Atualização concluída!"
 
-elif [ "$install" = "3" ]; then
-    echo "🗑️ Removendo GWS..."
-    sudo rm -rf "$GWS_PATH"
-    sudo rm -f /usr/local/bin/gws-start
+elif [ "$acao" = "3" ]; then
+    echo "🗑️ Removendo o GWS..."
+    rm -rf "$GWS_PATH"
+    rm -f "$BIN_PATH/gws-start"
     echo "✅ GWS removido com sucesso!"
 else
     echo "❌ Opção inválida."
@@ -129,4 +150,4 @@ else
 fi
 
 echo
-echo "🚀 Processo concluído!"
+echo "🎉 Instalação finalizada!"

@@ -1,13 +1,17 @@
 #text {
-    width: 90%;
+    width: 80%;
+    max-width: 90%;
+    min-width: 80%;
+    height: 70vh;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 15px;
+    font-size: 1em;
     background-color: white;
     color: black;
-    border-radius: 15px 15px 15px 15px;
-    margin: auto;
+    border-radius: 15px;
     box-shadow: 5px 5px 10px black;
     padding: 1em;
+    box-sizing: border-box;
+    resize: vertical; /* impede redimensionamento lateral */
 }
 
 #font_tools {
@@ -35,8 +39,8 @@
 }
 
 #upper, #lower {
-    width: 45px;
-    height: 45px;
+    width: 2.5em;
+    height: 2.5em;
     display: inline-block;
     cursor: pointer;
     gap: 1%;

@@ -1,7 +1,13 @@
 body {
     background-color: rgb(20, 20, 20);
     color: white;
-    margin: auto;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #topo {
@@ -22,81 +28,71 @@ h1 {
     font-size: 1.5em;
 }
 
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2em;
+}
+
 #caixa_login-1 {
     text-align: center;
-    margin: auto;
     margin-top: 1em;
-    width: 48%;
-    padding-bottom: 1%;
+    width: 90%;
+    max-width: 480px;
+    padding: 1em;
     background-color: rgb(48, 48, 48);
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.256);
 }
 
 #logo_imagem {
-    width: 40%;
+    width: 70%;
+    max-width: 250px;
     border: solid white 1px;
     border-radius: 5px;
     margin-top: 1em;
 }
 
-#inputs {
+input {
     margin-top: 1em;
     border-radius: 10px;
     width: 76%;
     padding: 2%;
     text-align: center;
-    font-size: 100%;
+    font-size: 1em;
+}
+
+.botao_login {
+    margin-top: 1em;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    background-color: rgb(112, 112, 112);
+    color: white;
+    border: solid white 2px;
+}
+
+#texto_1, #checkbox_text {
+    font-size: 1em;
+    margin-top: 1em;
+}
+
+#checkbox {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: middle;
+    margin-right: 0.5em;
 }
 
 #roda_pe {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    font-size: 0.9em;
     width: 100%;
-    background-color: #222; /* você pode mudar a cor */
-    color: white;           /* cor do texto */
-    text-align: center;
-    padding: 10px 0;
-    z-index: 1000;          /* garante que fique por cima de outros elementos */
-    font-family: Arial, Helvetica, sans-serif;
-
-}
-
-.botoes_acesso {
-    display: flex;
-    justify-content: center; /* centraliza os botões */
-    gap: 20px;               /* espaço entre os botões */
-    margin-top: 20px;
-  }
-  
-.botao_login {
-    margin-top: 1em;
-    padding: 2% 4% 2% 4%;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-  }
-  
-  /* Estilos individuais */
-.botao_login {
-    background-color: rgb(112, 112, 112);
-    color: rgb(255, 255, 255);
-    border: solid rgb(255, 255, 255) 2px;
-  }
-#texto_1 {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 100%;
-}
-#checkbox {
-    width: 3em;
-    height: 3em;
-    text-align: center;
-    align-items: center;
-}
-#checkbox_text {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 150%;
 }

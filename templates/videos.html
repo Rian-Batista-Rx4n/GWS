@@ -9,16 +9,27 @@
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
     <link rel="stylesheet" href="../static/videos.css">
+    <link rel="stylesheet" href="../static/filter.css">
 </head>
 <body>
     <div id="topo">
         <form action="/graywolf-video" method="GET">
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
-        <h1 id="titulo">Gray Wolf System.</h1>
+        <h1 id="titulo">Gray Wolf System</h1>
     </div>
+    
+    <div id="space"></div>
     <h1>{{ subcategoria.capitalize() }}</h1>
-
+    <form id="filter-space" method="GET" action="/graywolf-video/{{ subcategoria }}">
+        <input type="search" name="filtro" id="filterFileName" placeholder="File Name...">
+        <select name="filterExtension" id="filterExtension">
+            <option value="">All</option>
+            <option value=".mp4">.mp4</option>
+            <option value=".mkv">.mkv</option>
+        </select>
+        <button type="submit" id="filterConfirm">🔍</button>
+    </form>
     <div class="video-grid">
         {% for video in arquivos %}
         <div class="video-card">
@@ -43,6 +54,9 @@
 
         {% endfor %}
     </div>
+
+    <div id="space"></div>
+
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>

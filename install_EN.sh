@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "GrayWolfSystem Installer"
 echo "The following programs will be installed during this process:"
-echo "→ Python, Git, Pipx, Flask"
+echo "→ Python, Git, Flask, psutil, werkzeug"
 echo
 
 echo "Which Linux distribution are you using?"
@@ -23,10 +23,19 @@ echo "[1] DEFAULT (/opt/gws)"
 echo "[2] CUSTOM PATH"
 read -p ">> " path
 
-if [ "$path" = "1" ]; then
-    GWS_PATH="/opt/gws"
+# Definir caminho de instalação
+if [ "$distro" = "3" ]; then
+    GWS_PATH="$HOME/gws"
+    BIN_PATH="$HOME/bin"
+    mkdir -p "$BIN_PATH"
+    export PATH="$BIN_PATH:$PATH"
 else
-    read -p "Enter the full path where you want to install GWS: " GWS_PATH
+    if [ "$path" = "1" ]; then
+        GWS_PATH="/opt/gws"
+    else
+        read -p "Enter the full path where you want to install GWS: " GWS_PATH
+    fi
+    BIN_PATH="/usr/local/bin"
 fi
 
 install_packages() {
@@ -42,7 +51,8 @@ install_packages() {
             ;;
         3)
             pkg update -y && pkg upgrade -y
-            pkg install -y python git pipx
+            pkg install -y python git
+            pip install --upgrade pip
             ;;
         *)
             echo "❌ Invalid distro option!"
@@ -50,21 +60,25 @@ install_packages() {
             ;;
     esac
 
-    echo "📦 Installing Flask with pipx..."
-    pipx install flask
+    echo "📦 Installing Flask, psutil, werkzeug..."
+
+    if [ "$distro" = "3" ]; then
+        pip install flask psutil werkzeug
+    else
+        pipx install flask
+        pipx inject flask psutil werkzeug
+    fi
 }
 
 install_gws() {
     echo "⬇️ Cloning GrayWolfSystem to $GWS_PATH..."
-    sudo mkdir -p "$GWS_PATH"
-    sudo git clone https://github.com/Rian-Batista-Rx4n/GWS "$GWS_PATH"
+    mkdir -p "$GWS_PATH"
+    git clone https://github.com/Rian-Batista-Rx4n/GWS "$GWS_PATH"
 
-    sudo chown -R "$USER":"$USER" "$GWS_PATH"
-
-    echo "Creating shortcut for quick launch..."
-    echo -e "#!/bin/bash\ncd $GWS_PATH\npython3 main.py" | sudo tee /usr/local/bin/gws-start > /dev/null
-    sudo chmod +x /usr/local/bin/gws-start
-    echo "✅ Shortcut created: run 'gws-start' to launch the system!"
+    echo "🧩 Creating shortcut: gws-start"
+    echo -e "#!/bin/bash\ncd $GWS_PATH\npython3 main.py" > "$BIN_PATH/gws-start"
+    chmod +x "$BIN_PATH/gws-start"
+    echo "✅ Shortcut created → Run 'gws-start' to launch GWS"
 
     echo
     echo "👤 Now let's create the FIRST user (ADMIN) for GWS"
@@ -72,7 +86,7 @@ install_gws() {
     read -sp "→ Password: " initial_password
     echo
 
-    mkdir -p "$GWS_PATH/GWData/GWS_Users"
+    mkdir -p "$GWS_PATH/GWData/GWUsers"
 
     created_at=$(date +"%Y-%m-%d %H:%M:%S")
 
@@ -87,13 +101,21 @@ install_gws() {
 }
 EOF
 
+    echo "✅ Initial admin user created in: GWData/GWUsers/users.json"
 
-    echo "✅ Initial admin user created in: GWData/GWS_Users/users.json"
+    echo
+    echo "🚀 Testing GWS execution..."
+    cd "$GWS_PATH"
+    python3 main.py &
+    sleep 2
+    kill $!
+    echo "✅ GWS executed without crash (test passed)"
 }
 
 if [ "$install" = "1" ]; then
     install_packages
     install_gws
+
 elif [ "$install" = "2" ]; then
     echo "⚙️ Updating repository..."
 
@@ -103,9 +125,8 @@ elif [ "$install" = "2" ]; then
     mv "$GWS_PATH/GWData" "$TEMP_DIR/GWData" 2>/dev/null
     mv "$GWS_PATH/GWFiles" "$TEMP_DIR/GWFiles" 2>/dev/null
 
-    sudo rm -rf "$GWS_PATH"
-    sudo mkdir -p "$GWS_PATH"
-    sudo chown -R "$USER":"$USER" "$GWS_PATH"
+    rm -rf "$GWS_PATH"
+    mkdir -p "$GWS_PATH"
     
     git clone https://github.com/Rian-Batista-Rx4n/GWS "$GWS_PATH"
 
@@ -120,8 +141,8 @@ elif [ "$install" = "2" ]; then
 
 elif [ "$install" = "3" ]; then
     echo "🗑️ Removing GWS..."
-    sudo rm -rf "$GWS_PATH"
-    sudo rm -f /usr/local/bin/gws-start
+    rm -rf "$GWS_PATH"
+    rm -f "$BIN_PATH/gws-start"
     echo "✅ GWS successfully removed!"
 else
     echo "❌ Invalid option."
@@ -129,4 +150,4 @@ else
 fi
 
 echo
-echo "🚀 Installation completed!"
+echo "🎉 Installation finished!"

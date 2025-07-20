@@ -73,7 +73,53 @@
 a {
     color: white;
     font-weight: bold;
-    width: 80%;
-    height: 3em;
-    line-height: 3em;
+    width: 99%;
+    left: 0;
+}
+
+.arquivo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #555;
+}
+
+.arquivo-nome {
+    left: 0;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+    word-break: break-word;
+    transition: color 0.2s;
+}
+
+.arquivo-acoes {
+    display: flex;
+    gap: 0.6em;
+    align-items: center;
+}
+
+.arquivo-icon {
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    height: 3.5em;
+    width: 3.5em;
+    transition: transform 0.2s;
+}
+
+.arquivo-icon img {
+    width: 100%;
+    height: auto;
+}
+
+.arquivo-icon:hover {
+    transform: scale(1.1);
+}
+
+#remover {
+    background-color: red;
 }

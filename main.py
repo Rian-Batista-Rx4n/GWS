@@ -2,7 +2,9 @@
 # --------------------- IMPORTS -------------------------------
 # =============================================================
 from flask import Flask, render_template, request, redirect, flash, session, send_from_directory, url_for, abort
+from functools import wraps
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 from urllib.parse import quote
 from datetime import datetime
 import getpass
@@ -270,6 +272,9 @@ def listar_arquivos_por_categoria(categoria):
         registrar_log(categoria, session.get("usuario_logado", "unknow"), "Not in Session")
         return redirect("/")
 
+    filtro = request.args.get("filtro", "").lower()
+    extensao = request.args.get("filterExtension", "").lower()
+
     usuario = session.get('usuario_logado')
     base_path = 'GWFiles/text'
     extensoes_script = ['.py', '.js', '.ts', '.html', '.css', '.sh']
@@ -288,7 +293,9 @@ def listar_arquivos_por_categoria(categoria):
             _, ext = os.path.splitext(file)
             if ext.lower() in extensoes_permitidas:
                 if file.startswith(f"{usuario}_") or file.startswith("public_"):
-                    files.append(file)
+                    if filtro in file.lower() and (file.endswith(extensao) or not extensao):
+                        files.append(file)
+
 
     registrar_log("TextList", session["usuario_logado"], f"Accessed {categoria} files")
 
@@ -299,21 +306,10 @@ def listar_arquivos_por_categoria(categoria):
         categoria_pasta=categoria
     )
 
-@app.route("/graywolf-list", methods=["GET"])
-def graywolf_list():
-    return listar_arquivos_por_categoria('list')
+@app.route("/graywolf-text/<categoria>", methods=["GET"])
+def graywolf_text_categoria(categoria):
+    return listar_arquivos_por_categoria(categoria)
 
-@app.route("/graywolf-note", methods=["GET"])
-def graywolf_note():
-    return listar_arquivos_por_categoria('note')
-
-@app.route("/graywolf-script", methods=["GET"])
-def graywolf_script():
-    return listar_arquivos_por_categoria('script')
-
-@app.route("/graywolf-text-no-category", methods=["GET"])
-def graywolf_text_no_category():
-    return listar_arquivos_por_categoria('text_no_category')
 
 # =============================== Render Text =========================
 @app.route("/graywolf-read-text/<categoria>/<nome_arquivo>", methods=["GET"])
@@ -326,17 +322,14 @@ def graywolf_read_text(categoria, nome_arquivo):
     base_path = os.path.join("GWFiles", "text", categoria)
     file_path = os.path.join(base_path, nome_arquivo)
 
-    # Segurança: impede acesso fora da pasta
     if not os.path.abspath(file_path).startswith(os.path.abspath(base_path)):
         registrar_log("ReadText", usuario, "Access Denied (Path traversal)")
         return abort(403)
 
-    # Verifica se o arquivo é permitido ao usuário
     if not (nome_arquivo.startswith(f"{usuario}_") or nome_arquivo.startswith("public_")):
         registrar_log("ReadText", usuario, f"Not permitted: {nome_arquivo}")
         return abort(403)
 
-    # Verifica se o arquivo existe
     if not os.path.isfile(file_path):
         registrar_log("ReadText", usuario, f"File not found: {file_path}")
         return abort(404)
@@ -415,8 +408,6 @@ def graywolf_save_text():
         flash(f"Error saving file: {e}")
         return redirect(url_for("graywolf_homepage"))
 
-    # 🧠 Aqui você extrai categoria e nome_arquivo a partir do path completo
-    # Exemplo de path: GWFiles/text/note/arquivo.txt
     partes = file_path.split("/")
     if len(partes) >= 4:
         categoria = partes[2]
@@ -516,9 +507,10 @@ def download_arquivo(nome_arquivo):
     return send_from_directory(GWFILES_DIR, nome_arquivo, as_attachment=True)
 
 @app.route('/graywolf-uploadFiles')
+@app.route('/graywolf-uploadFiles')
 def upload_files_page():
     registrar_log("Uploads", session.get("usuario_logado", "unknow"), "Uploads Accessed")
-    
+
     usuario = session.get('usuario_logado')
     if not usuario:
         registrar_log("Uploads", session.get("usuario_logado", "unknow"), "Not in Session")
@@ -529,6 +521,9 @@ def upload_files_page():
 
     arquivos = []
 
+    nome_filtro = request.args.get("filterFileName", "").lower()
+    extensao_filtro = request.args.get("filterExtension", "").lower()
+
     for root, dirs, files in os.walk(GWFILES_DIR):
         for file in files:
             if not allowed_file(file):
@@ -537,15 +532,14 @@ def upload_files_page():
 
             relative_path = os.path.relpath(os.path.join(root, file), start=GWFILES_DIR)
 
-            if is_admin:
-                arquivos.append(relative_path)
-            else:
-                if file.startswith(f"{usuario}_") or file.startswith("public_"):
+            if is_admin or file.startswith(f"{usuario}_") or file.startswith("public_"):
+                nome_arquivo = file.lower()
+                if nome_filtro in nome_arquivo and (extensao_filtro == "" or nome_arquivo.endswith(extensao_filtro)):
                     arquivos.append(relative_path)
-
 
     registrar_log("Uploads", usuario, "Uploads Rendered")
     return render_template('uploadFiles.html', arquivos=arquivos)
+
 # ======================================= RENAME Files ===================================
 @app.route("/graywolf-rename-form", methods=["GET"])
 def graywolf_rename_file_form():
@@ -567,38 +561,33 @@ def graywolf_rename_file():
     novo_nome = request.form.get("novo_nome")
 
     if not arquivo_antigo_path or not os.path.exists(arquivo_antigo_path):
-        return render_template("texts.html")
+        return redirect(request.referrer or url_for('graywolf_upload_files'))
 
     nome_arquivo_antigo = os.path.basename(arquivo_antigo_path)
     pasta = os.path.dirname(arquivo_antigo_path)
     novo_caminho = os.path.join(pasta, novo_nome)
 
-    # Verificações
     if os.path.exists(novo_caminho):
-    
-        return render_template("texts.html")
+        return redirect(request.referrer or url_for('graywolf_upload_files'))
 
     if not (nome_arquivo_antigo.startswith(f"{usuario}_") or nome_arquivo_antigo.startswith("public_")):
         return "Você não tem permissão para renomear esse arquivo", 403
     extensao_antiga = os.path.splitext(nome_arquivo_antigo)[1]
     extensao_nova = os.path.splitext(novo_nome)[1]
 
-    # Impede troca de extensão
     if extensao_antiga != extensao_nova:
-        return render_template("texts.html")
+        return redirect(request.referrer or url_for('graywolf_upload_files'))
 
-    # Impede troca de prefixo
     if nome_arquivo_antigo.startswith("public_"):
         prefixo = "public_"
     elif nome_arquivo_antigo.startswith(f"{usuario}_"):
         prefixo = f"{usuario}_"
     else:
-        return render_template("texts.html")
+        return redirect(request.referrer or url_for('graywolf_upload_files'))
 
     novo_nome_limpo = prefixo + novo_nome.split(prefixo)[-1]  # garante prefixo
 
     novo_caminho = os.path.join(pasta, novo_nome_limpo)
-
 
     os.rename(arquivo_antigo_path, novo_caminho)
     registrar_log("RenameFile", usuario, f"{nome_arquivo_antigo} -> {novo_nome}")
@@ -696,7 +685,8 @@ def exibir_videos(subcategoria):
         return redirect("/graywolf-upload")
 
     usuario = session['usuario_logado']
-    
+    filtro = request.args.get("filtro", "").lower()
+
     with open(USERS_FILE) as f:
         usuarios = json.load(f)
         user_info = usuarios.get(usuario)
@@ -707,9 +697,11 @@ def exibir_videos(subcategoria):
         if os.path.isfile(os.path.join(caminho_pasta, f))
         and allowed_file(f)
         and (f.startswith(f'{usuario}_') or f.startswith('public_') or is_admin)
+        and (filtro in f.lower())
     ]
+
     registrar_log("Video", session.get("usuario_logado", "unknow"), f"Video: {subcategoria} Rendered")
-    return render_template("videos.html", subcategoria=subcategoria, arquivos=arquivos)
+    return render_template("videos.html", subcategoria=subcategoria, arquivos=arquivos, filtro=filtro)
 
 @app.route('/videos/<subcategoria>/<nome_arquivo>')
 def servir_video(subcategoria, nome_arquivo):
@@ -746,20 +738,10 @@ def servir_audio(subcategoria, nome_arquivo):
     return send_from_directory(caminho, nome_arquivo)
 
 # ================================ Show Image ==============================
-@app.route("/graywolf-photo")
-def exibir_fotos():
-    registrar_log("Image", session.get("usuario_logado", "unknow"), "Image: Photo Accessed")
-    return exibir_imagens_por_subcategoria("photo")
-
-@app.route("/graywolf-screenshot")
-def exibir_capturas():
-    registrar_log("Image", session.get("usuario_logado", "unknow"), "Image: Screenshot Accessed")
-    return exibir_imagens_por_subcategoria("screenshot")
-
-@app.route("/graywolf-image-no-category")
-def exibir_imagens_gerais():
-    registrar_log("Image", session.get("usuario_logado", "unknow"), "Image: image_no_category Accessed")
-    return exibir_imagens_por_subcategoria("image_no_category")
+@app.route("/graywolf-image/<subcategoria>")
+def exibir_imagens_dinamico(subcategoria):
+    registrar_log("Image", session.get("usuario_logado", "unknow"), f"Image: {subcategoria} Accessed")
+    return exibir_imagens_por_subcategoria(subcategoria)
 
 def exibir_imagens_por_subcategoria(subcategoria):
     usuario = session.get('usuario_logado', 'unknown')
@@ -774,11 +756,16 @@ def exibir_imagens_por_subcategoria(subcategoria):
     user_info = usuarios.get(usuario)
     is_admin = user_info and user_info.get("nivel") == "admin"
 
+    filtro = request.args.get("filtro", "").lower()
+    extensao = request.args.get("filterExtension", "").lower()
+
     imagens = [
         f for f in os.listdir(caminho)
         if os.path.isfile(os.path.join(caminho, f))
         and allowed_file(f)
         and (f.startswith(f'{usuario}_') or f.startswith('public_') or is_admin)
+        and (filtro in f.lower())
+        and (f.endswith(extensao) or not extensao)
     ]
 
     registrar_log("Image", usuario, f"Image: {subcategoria} Rendered")
@@ -815,11 +802,16 @@ def exibir_documentos_categoria(categoria):
         usuarios = carregar_usuarios()
         nivel_usuario = usuarios.get(usuario, {}).get("nivel", "user")
 
+        filtro = request.args.get("filtro", "").lower()
+        extensao = request.args.get("filterExtension", "").lower()
+
         if nivel_usuario == "admin":
             arquivos = [
                 arquivo for arquivo in os.listdir(pasta)
                 if os.path.isfile(os.path.join(pasta, arquivo))
                 and allowed_file(arquivo)
+                and (filtro in arquivo.lower())
+                and (arquivo.endswith(extensao) or not extensao)
             ]
         else:
             arquivos = [
@@ -827,6 +819,8 @@ def exibir_documentos_categoria(categoria):
                 if os.path.isfile(os.path.join(pasta, arquivo))
                 and allowed_file(arquivo)
                 and (arquivo.startswith(f'{usuario}_') or arquivo.startswith('public_'))
+                and (filtro in arquivo.lower())
+                and (arquivo.endswith(extensao) or not extensao)
             ]
 
         registrar_log("Document", session.get("usuario_logado", "unknow"), f"Document: {categoria} Rendered")
@@ -915,7 +909,6 @@ def graywolf_logs():
     try:
         arquivos_log = [f for f in os.listdir(LOG_DIR) if f.endswith(".log")]
 
-        # Ordena os arquivos do mais recente para o mais antigo com base na modificação
         arquivos_log.sort(key=lambda f: os.path.getmtime(os.path.join(LOG_DIR, f)), reverse=True)
 
         return render_template("logs.html", arquivos_log=arquivos_log)
@@ -937,7 +930,12 @@ def graywolf_log_view():
     except Exception as e:
         return redirect(url_for("graywolf_logs"))
 
+# ========================= CONFIG STATS =========================
+@app.route("/graywolf-config", methods=["GET"])
+def graywolf_config():
+    return render_template("config.html")
+
 # ==================== End ============================
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=False, host='0.0.0.0', port=7777)

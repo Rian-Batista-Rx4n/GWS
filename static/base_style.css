@@ -5,10 +5,12 @@ body {
 }
 
 #topo {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2em;
+    width: 100%;
+    top: 0;
     height: 3.5em;
     background-color: rgb(46, 46, 46);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.256);
@@ -27,7 +29,7 @@ h1 {
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 2vh;
 }
 
 #roda_pe {
@@ -50,4 +52,10 @@ h1 {
     margin: auto;
     margin-top: 1%;
     margin-bottom: 1%;
+}
+#space {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 2em;
+    height: 2em;
 }

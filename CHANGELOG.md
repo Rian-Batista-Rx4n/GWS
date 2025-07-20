@@ -2,6 +2,23 @@
 
 All major changes to this project will be documented here.
 
+## [0.9.7] - 2025-07-01
+
+### ✨ Added
+- File **filter system** in the interface for easier file organization and searching.
+
+### 🛠️ Changed
+- **Default server port changed from 8080 to 7777** (can still be configured manually).
+- Started **reworking and improving the GWS installer** for better compatibility with different environments, including Termux.
+- Adjusted the **"Back" button size** for improved usability.
+- General **CSS visual improvements**, making the interface cleaner and more polished.
+
+### 🐛 Fixed
+- CSS issues that **made parts of the interface inaccessible** on certain resolutions.
+- Bug that **prevented the STATS category from working on Termux**.
+
+---
+
 ## [0.9.6] - 2025-06-21
 ### Added
 - File information is now viewable in the Uploads section

@@ -1,47 +1,108 @@
 body {
     text-align: center;
+    font-family: Arial, sans-serif;
+    padding-top: 5em;
+    box-sizing: border-box;
 }
 
 #upload-caixa {
-    display: flex;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1%;
-    margin: auto;
-    text-align: center;
-    width: 80%;
-    padding-bottom: 1em;
+    width: 90%;
+    max-width: 600px;
+    margin: 2em auto;
     background-color: rgb(46, 46, 46);
-    border-radius: 5px;
-    font-size: 120%;
-    margin-top: 1em;
+    border-radius: 8px;
+    padding: 2em 1em;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    box-sizing: border-box;
 }
 
-
-label {
+label, h2 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 200%;
+    font-size: 1.2em;
+    margin-top: 1em;
+    color: white;
 }
 
+#linha {
+    width: 90%;
+    height: 2px;
+    background-color: white;
+    border-radius: 10px;
+    margin: 1em auto;
+}
 
 select {
+    width: 90%;
+    padding: 0.5em;
+    margin: 0.5em auto;
+    border-radius: 5px;
+    border: none;
+    font-size: 1em;
+    background-color: #eee;
     cursor: pointer;
 }
 
-
 #publicButton {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5em;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 1em auto;
+    color: white;
+    background: none;
+    font-size: 1em;
 }
 
 #uploadButton {
-    width: 5em;
-    height: 4em;
-    margin-top: 1%;
+    width: 100%;
+    max-width: 150px;
+    height: 3em;
+    margin-top: 1em;
     background-color: rgb(24, 126, 173);
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
     font-family: Impact;
     font-weight: bold;
     color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#uploadButton:hover {
+    background-color: rgb(16, 100, 140);
+}
+
+#uploadProgress {
+    width: 90%;
+    height: 1em;
+    margin: 1em auto;
+    display: none;
+}
+
+#uploadStatus {
+    font-weight: bold;
+    margin-top: 1em;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    #upload-caixa {
+        padding: 1.5em 1em;
+    }
+
+    label, h2 {
+        font-size: 1.1em;
+    }
+
+    #uploadButton {
+        height: 3em;
+    }
+
+    select {
+        font-size: 0.95em;
+    }
 }

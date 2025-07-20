@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
     <link rel="stylesheet" href="../static/uploads.css">
+    <link rel="stylesheet" href="../static/filter.css">
     <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
     <title>GWS - Uploads</title>
 </head>
@@ -15,8 +16,34 @@
         <form action="/graywolf-back" method="GET">
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
-        <h1 id="titulo">Gray Wolf System.</h1>
+        <h1 id="titulo">Gray Wolf System</h1>
     </div>
+    
+    <div id="space"></div>
+
+    <form id="filter-space" method="GET" action="/graywolf-uploadFiles">
+        <input type="search" name="filterFileName" id="filterFileName" placeholder="File Name...">
+        <select name="filterExtension" id="filterExtension">
+            <option value="">All</option>
+            <option value=".txt">.txt</option>
+            <option value=".mp4">.mp4</option>
+            <option value=".mp3">.mp3</option>
+            <option value=".rar">.rar</option>
+            <option value=".zip">.zip</option>
+            <option value=".png">.png</option>
+            <option value=".jpg">.jpg</option>
+            <option value=".jpeg">.jpeg</option>
+            <option value=".gif">.gif</option>
+            <option value=".mkv">.mkv</option>
+            <option value=".pdf">.pdf</option>
+            <option value=".xlsx">.xlsx</option>
+            <option value=".docx">.docx</option>
+            <option value=".pptx">.pptx</option>
+        </select>
+        <button type="submit" id="filterConfirm">🔍</button>
+    </form>
+
+
     {% if arquivos %}
         {% for arquivo in arquivos %}
             <div class="arquivo">
@@ -30,11 +57,12 @@
                         </button>
                     </form>
                     <form method="GET" action="{{ url_for('graywolf_rename_file_form') }}">
-                        <input type="hidden" name="file_path" value="GWFiles/geral/{{ categoria_pasta }}/{{ arquivo }}">
+                        <input type="hidden" name="file_path" value="GWFiles/{{ categoria_pasta }}/{{ arquivo }}">
                         <button type="submit" class="rename_button">
                             <img src="{{ url_for('static', filename='images/rename_icon.png') }}" alt="Renomear">
                         </button>
                     </form>
+
                     <form method="POST" action="/graywolf-delete-file">
                         <input type="hidden" name="file_path" value="{{ arquivo }}">
                         <button type="submit" class="botao-delete"><img id="trash_button" src="../static/images/trash_icon.png" alt=""></button>

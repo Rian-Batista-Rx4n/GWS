@@ -14,7 +14,8 @@
         <form action="/graywolf-back" method="GET">
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
-        <h1 id="titulo">Gray Wolf System.</h1>
+        <h1 id="titulo">Gray Wolf System</h1>
+        
 
         <div id="tools">
             <form action="/graywolf-logs" method="GET">
@@ -31,9 +32,12 @@
 
     </div>
 
+    
+    <div id="space"></div>
+    
     </div id="stats">
         <div id="server_stats">
-        <h2>Server Status</h2>
+        <h2>Server Stats</h2>
         <ul>
             <li><strong>CPU Usage:</strong> {{ cpu_percent }}%</li>
             <li><strong>Load Average:</strong> {{ load_avg[0] }} (1min), {{ load_avg[1] }} (5min), {{ load_avg[2] }} (15min)</li>

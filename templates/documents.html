@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
     <link rel="stylesheet" href="../static/documents.css">
+    <link rel="stylesheet" href="../static/filter.css">
     <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
     <title>GWS - Documents</title>
 </head>
@@ -15,16 +16,31 @@
         <form action="/graywolf-document" method="GET">
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
-        <h1 id="titulo">Gray Wolf System.</h1>
+        <h1 id="titulo">Gray Wolf System</h1>
     </div>
+    
+    <div id="space"></div>
     <h2 style="text-align:center;">{{ categoria.upper() }}</h2>
+
+    <form id="filter-space" method="GET" action="/graywolf-uploadFiles">
+        <input type="search" name="filterFileName" id="filterFileName" placeholder="File Name...">
+        <select name="filterExtension" id="filterExtension">
+            <option value="">All</option>
+            <option value=".pdf">.pdf</option>
+            <option value=".xlsx">.xlsx</option>
+            <option value=".docx">.docx</option>
+            <option value=".pptx">.pptx</option>
+        </select>
+        <button type="submit" id="filterConfirm">🔍</button>
+    </form>
+
     <div id="botoes-caixa">
         {% if arquivos %}
             
             <ul id="lista-arquivos">
                 {% for arquivo in arquivos %}
                 <li style="display: flex; align-items: center; justify-content: space-between;">
-                    <a class="link-download" href="{{ url_for('download_arquivo', categoria=categoria, nome_arquivo=arquivo) }}" download>{{ arquivo }}</a>
+                    <a class="link-download" href="{{ url_for('download_arquivo', nome_arquivo='document/' ~ categoria_pasta ~ '/' ~ arquivo) }}" download>{{ arquivo }}</a>
 
                     <div id="tools">
                         <form method="GET" action="{{ url_for('graywolf_rename_file_form') }}">
@@ -49,7 +65,9 @@
             <p style="text-align:center;">There is no file here.</p>
         {% endif %}
     </div>
-
+    
+    <div id="space"></div>
+    
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>

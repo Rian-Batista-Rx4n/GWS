@@ -15,8 +15,8 @@
 }
 
 .edit_button {
-    width: 75px;
-    height: 75px;
+    width: 65px;
+    height: 65px;
     margin-bottom: 1em;
     background-color: rgb(255, 255, 255);
 }
@@ -27,4 +27,11 @@
     justify-content: center;
     display: flex;
     gap: 1%;
+}
+
+#space {
+    margin-top: 3em;
+    margin-bottom: 3em;
+    height: 2em;
+    width: 2em;
 }

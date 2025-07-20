@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
     <link rel="stylesheet" href="../static/texts.css">
+    <link rel="stylesheet" href="../static/filter.css">
     <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
     <title>GWS - Texts</title>
 </head>
@@ -15,34 +16,53 @@
         <form action="/graywolf-text" method="GET">
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
-        <h1 id="titulo">Gray Wolf System.</h1>
+        <h1 id="titulo">Gray Wolf System</h1>
     </div>
+    
+    <div id="space"></div>
+
     <h2 style="text-align:center;">{{ categoria.upper() }}</h2>
+    <form id="filter-space" method="GET" action="/graywolf-uploadFiles">
+        <input type="search" name="filterFileName" id="filterFileName" placeholder="File Name...">
+        <select name="filterExtension" id="filterExtension">
+            <option value="">All</option>
+            <option value=".txt">.txt</option>
+            <option value=".js">.js</option>
+            <option value=".py">.py</option>
+            <option value=".ts">.ts</option>
+            <option value=".html">.html</option>
+            <option value=".css">.css</option>
+            <option value=".sh">.sh</option>
+        </select>
+        <button type="submit" id="filterConfirm">🔍</button>
+    </form>
+
     <div id="botoes-caixa">
         {% if files %}
             
             <ul id="lista-arquivos">
                 {% for arquivo in files %}
-                <li style="display: flex; align-items: center; justify-content: space-between;">
-                    <a href="{{ url_for('graywolf_read_text', categoria=categoria_pasta, nome_arquivo=arquivo) }}">{{ arquivo }}</a>
-
-                    <div id="tools">
+                <li class="arquivo-item">
+                    <div class="arquivo-acoes">
+                        <a href="{{ url_for('graywolf_read_text', categoria=categoria_pasta, nome_arquivo=arquivo) }}" class="arquivo-nome" title="Abrir">
+                            {{ arquivo }}
+                        </a>
                         <form method="GET" action="{{ url_for('graywolf_rename_file_form') }}">
                             <input type="hidden" name="file_path" value="GWFiles/text/{{ categoria_pasta }}/{{ arquivo }}">
-                            <button type="submit" class="rename_button">
+                            <button type="submit" class="arquivo-icon" title="Renomear">
                                 <img src="{{ url_for('static', filename='images/rename_icon.png') }}" alt="Renomear">
                             </button>
                         </form>
 
-                        <form method="POST" action="/graywolf-delete-file" style="display: inline;">
+                        <form method="POST" action="/graywolf-delete-file">
                             <input type="hidden" name="file_path" value="GWFiles/text/{{ categoria_pasta }}/{{ arquivo }}">
-                            <button type="submit" class="botao-delete">
-                                <img id="trash_button" src="../static/images/trash_icon.png" alt="">
+                            <button  id="remover" type="submit" class="arquivo-icon" title="Excluir">
+                                <img src="{{ url_for('static', filename='images/trash_icon.png') }}" alt="Excluir">
                             </button>
                         </form>
                     </div>
-
                 </li>
+
                 {% endfor %}
             </ul>
 
@@ -51,6 +71,8 @@
         {% endif %}
     </div>
 
+    <div id="space"></div>
+    
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>

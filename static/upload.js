@@ -57,26 +57,47 @@ uploadForm.addEventListener("submit", function (e) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/graywolf-upload-file", true);
 
+    let startTime = null;
+
     xhr.upload.onprogress = function (event) {
         if (event.lengthComputable) {
+            const now = Date.now();
+            if (!startTime) startTime = now;
+
+            const elapsed = (now - startTime) / 1000; // segundos
+            const uploadedMB = event.loaded / (1024 * 1024);
+            const totalMB = event.total / (1024 * 1024);
+            const speed = uploadedMB / elapsed; // MB/s
+
             const percent = Math.round((event.loaded / event.total) * 100);
+            const remainingTime = (event.total - event.loaded) / (speed * 1024 * 1024); // segundos
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = Math.floor(remainingTime % 60);
+
             progress.style.display = "block";
             progress.value = percent;
-            status.textContent = `Uploading...  ${percent}%`;
+
+            status.textContent = `Uploading... ${percent}% — approx. ${minutes}m ${seconds}s left`;
         }
     };
+
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            status.textContent = "Upload Complete!";
+            status.textContent = "✅ Upload Complete!";
+            status.style.color = "lightgreen";
         } else {
-            status.textContent = "Upload Failed!";
+            status.textContent = "❌ Upload Failed!";
+            status.style.color = "red";
         }
     };
 
+
     xhr.onerror = function () {
-        status.textContent = "ERROR CONNECTION!.";
+        status.textContent = "❌ ERROR: Connection Failed!";
+        status.style.color = "red";
     };
+
 
     xhr.send(formData);
 });

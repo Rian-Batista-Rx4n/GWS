@@ -2,21 +2,37 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="shortcut icon" href="../static/images/GrayWolf_512png.png" type="image/x-icon">
     <title>GWS - Images</title>
     <link rel="stylesheet" href="../static/backButton_style.css">
     <link rel="stylesheet" href="../static/base_style.css">
     <link rel="stylesheet" href="../static/buttons_style.css">
     <link rel="stylesheet" href="../static/images.css">
+    <link rel="stylesheet" href="../static/filter.css">
 </head>
 <body>
     <div id="topo">
         <form action="/graywolf-image" method="GET">
             <button id="backButton" type="submit"><img src="../static/images/backButton_icon.png" alt=""></button>
         </form>
-        <h1 id="titulo">Gray Wolf System.</h1>
+        <h1 id="titulo">Gray Wolf System</h1>
     </div>
+    
+    <div id="space"></div>
     <h1>{{ subcategoria }}</h1>
+
+    <form id="filter-space" method="GET" action="/graywolf-image/{{ subcategoria }}">
+        <input type="search" name="filtro" id="filterFileName" placeholder="File Name...">
+        <select name="filterExtension" id="filterExtension">
+            <option value="">All</option>
+            <option value=".png">.png</option>
+            <option value=".jpg">.jpg</option>
+            <option value=".jpeg">.jpeg</option>
+        </select>
+        <button type="submit" id="filterConfirm">🔍</button>
+    </form>
 
     <div class="galeria">
         {% for imagem in imagens %}
@@ -34,6 +50,8 @@
         </form>
     </div>
 
+    <div id="space"></div>
+    
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>   

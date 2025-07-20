@@ -1,0 +1,29 @@
+#filter-space {
+    width: 90%;
+    height: 3.5em;
+    display: flex;
+    text-align: center;
+    margin: auto;
+    align-items: center;
+}
+
+#filterFileName {
+    border-radius: 10px 0 0 10px;
+    height: 2.5em;
+    font-size: 12pt;
+}
+
+#filterExtension {
+    height: 2.5em;
+    border-radius: 0 10px 10px 0;
+    margin-left: 2px;
+    font-size: 12pt;
+}
+
+#filterConfirm{
+    height: 3em;
+    width: 3em;
+    border-radius: 100%; 
+    margin-left: 10px;
+}
+

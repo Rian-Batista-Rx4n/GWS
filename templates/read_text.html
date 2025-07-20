@@ -19,12 +19,14 @@
         <form action="/graywolf-text" method="GET">
             <button id="backButton" type="submit"><img src="{{ url_for('static', filename='images/backButton_icon.png') }}" alt=""></button>
         </form>
-        <h1 id="titulo">Gray Wolf System.</h1>
+        <h1 id="titulo">Gray Wolf System</h1>
         <div id="font_tools">
             <div id="upper"><img id="upper_icon" src="{{ url_for('static', filename='images/font_uppercase_icon.png') }}" alt=""></div>
             <div id="lower"><img id="lower_icon" src="{{ url_for('static', filename='images/font_lowercase_icon.png') }}" alt=""></div>
         </div>
     </div>
+    
+    <div id="space"></div>
     <h2 style="text-align:center;">{{ file_name.upper() }}</h2>
     <div id="box">
         <div id="tools">
@@ -38,6 +40,8 @@
         <pre id="text" style="white-space: pre-wrap; word-wrap: break-word;">{{ conteudo | e }}</pre>
     </div>
 
+    <div id="space"></div>
+    
     <div id="roda_pe">
         <p>Copyright GrayWolf 2025.</p>
     </div>
