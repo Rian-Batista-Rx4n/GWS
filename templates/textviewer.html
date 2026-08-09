@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/textviewer.css')}}"/>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='icons/graywolf_icon.png') }}" type="image/x-icon"/>
+    <script defer src="{{ url_for('static',filename='js/textviewer.js') }}"></script>
+    <title>GWS | {{ filename }}</title>
+</head>
+
+<body>
+    <header>
+        <h1>Gray Wolf System</h1>
+        <p><a style="color: white; text-decoration: none;" href="https://github.com/Rian-Batista-Rx4n/GWS">🐺 GWS on GitHub</a></p>
+        <a href="javascript:history.back()" class="back-btn">← Back</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>{{ filename }}</h2>
+
+            <form method="POST" action="/save_text">
+                <textarea name="content" spellcheck="false" style="width:100%; height:80vh;">{{- content -}}</textarea>
+                <input type="hidden" name="path" value="{{ path }}">
+                <button type="submit" class="save-btn">💾 Save</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Developer: Rx4n</p>
+        <p>GWS: v1.0.0</p>
+        <p>©2026</p>
+    </footer>
+</body>
+</html>

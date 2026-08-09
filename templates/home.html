@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='icons/graywolf_icon.png') }}" type="image/x-icon">
+    <script defer src="{{ url_for('static',filename='js/menu.js') }}"></script>
+    <title>GWS | {{username}}</title>
+</head>
+
+<body>
+    <div id="fileModal" class="modal">
+        <div class="modal-box">
+            <h3>File</h3>
+            <button id="openBtn">Open</button>
+            <button id="downloadBtn">Download</button>
+            <button id="infoBtn">Info</button>
+            <button id="closeBtn">Close</button>
+        </div>
+    </div>
+    
+    <header>
+        <div>
+            <h1>Gray Wolf System</h1>
+            <p>Welcome, {{username}}</p>
+        </div>
+    </header>
+
+    <div class="top-buttons">
+        <a href="/logout" title="Logout"><img class="top-button" src="{{ url_for('static',filename='icons/exit_icon.png') }}" alt=""></a>
+        <a href="/settings" title="Settings"><img class="top-button" src="{{ url_for('static',filename='icons/config_icon.png') }}" alt=""></a>
+    </div>
+
+    <main class="explorer">
+        <aside>
+            <h3 class="side-explorer">
+                Local Folders
+            </h3>
+            <ul>
+                {% for item in files %}
+                    {% if item.is_dir %}
+                        <li class="side-explorer"><a
+                            href="/home/{{item.path}}"
+                            data-path="{{item.path}}"
+                            data-name="{{item.name}}"
+                            data-dir="{{item.is_dir}}">📁 {{item.name}}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <section class="files">
+            <h2>
+                /home/{{username}}
+                {% if current %}
+                /{{current}}
+                {% endif %}
+            </h2>
+
+            {% if current %}
+                <a class="back-button" href="javascript:history.back()">← Back</a>
+            {% endif %}
+
+            <div class="file-grid">
+                {% for item in files %}
+                    {% if item.is_dir %}
+                        <a class="archive item"
+                            href="/home/{{item.path}}"
+                            data-path="{{item.path}}"
+                            data-name="{{item.name}}"
+                            data-dir="{{item.is_dir}}">
+                    {% else %}
+                        <div class="archive item file-item"
+                            data-path="{{item.path}}"
+                            data-name="{{item.name}}"
+                            data-dir="{{item.is_dir}}"
+                            data-extension="{{item.extension}}">
+                    {% endif %}
+            
+                    {% if item.is_dir %}
+                        <div class="icon">📁</div>
+                    {% elif item.extension in [".png",".jpg",".jpeg",".gif",".webp"] %}
+                        <img loading="lazy" src="http://127.0.0.1:7777/open/{{item.path}}" alt="" class="image-thumbnail"><div class="icon-thumbnail">🖼</div>
+                    {% elif item.extension in [".mp4",".webm",".avi", ".mkv", ".mov", ".wmv"] %}
+                        <div class="icon">🎥</div>
+                    {% elif item.extension in [".mp3",".wav", ".ogg"] %}
+                        <div class="icon">🎵</div>
+                    {% else %}
+                        <div class="icon">📄</div>
+                    {% endif %}
+
+                    <p>{{item.name}}</p>
+
+                    {% if item.is_dir %}
+                        </a>
+                    {% else %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <br>
+
+        </section>
+
+        <div class="menu" id="menu">
+            <div class="icons-menu" id="delete" title="Delete">🗑</div>
+            <div class="icons-menu" id="rename" title="Rename">✏</div>
+            <div class="icons-menu" id="create-document" title="New File">📄</div>
+            <div class="icons-menu" id="create-folder" title="New Folder">📁</div>
+            <div class="icons-menu" id="upload" title="Upload">⬆</div>
+        </div>
+        <div class="menu-button" id="menu-button" title="Menu">☰</div>
+    </main>
+
+    <footer>
+        <p>Developer: Rx4n</p>
+        <p>GWS: v1.0.0</p>
+        <p>©2026</p>
+    </footer>
+</body>
+</html>

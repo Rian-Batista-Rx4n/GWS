@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gray Wolf System</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='icons/graywolf_icon.png') }}" type="image/x-icon">
+    <script defer src="{{ url_for('static',filename='js/script.js') }}"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Gray Wolf System</h1>
+        <p><a style="color: white; text-decoration: none;" href="https://github.com/Rian-Batista-Rx4n/GWS">🐺 GWS on GitHub</a></p>
+    </header>
+
+    <main>
+        <section class="login-box">
+            <img src="{{ url_for('static', filename='icons/graywolf_icon.png') }}" class="logo">
+
+            <h2>Follow the Gray Wolf...</h2>
+
+            <form method="post">
+                <input type="text" placeholder="Username" required id="username" name="username">
+
+                <div class="password-box">
+                    <input type="password" id="password" placeholder="Password" required name="password">
+                    <button type="button" onclick="verSenha()">👁</button>
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>Developer: Rx4n</p>
+        <p>GWS: v1.0.0</p>
+        <p>©2026</p>
+    </footer>
+</body>
+</html>

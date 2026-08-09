@@ -1,0 +1,139 @@
+body {
+    background: #080d18;
+    color: white;
+    font-family: Arial;
+}
+
+header {
+    padding: 20px;
+    text-align: center;
+}
+
+.back-btn {
+    width: 64px;
+    height: 64px;
+    text-decoration: none;
+    color: white;
+    background: #1e293b;
+    border-radius: 12px;
+    border: solid 1px white;
+    padding: 8px;
+    cursor: pointer; 
+    position: absolute;
+    top: 20px;
+    left: 8px;
+    text-align: center;
+}
+
+.panel {
+    width: 700px;
+    margin: auto;
+    background: #111827;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+th {
+    color: #60a5fa;
+}
+td,th {
+    padding: 15px;
+    border-bottom: 1px solid #1e293b;
+    text-align: center;
+}
+
+button {
+    padding: 10px;
+    background: #60a5fa;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+body {
+    background: #080d18;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    padding: 30px;
+    border-bottom:1px solid #1e293b;
+}
+
+header h1 {
+    font-size:35px;
+    color:#60a5fa;
+}
+
+header p {
+    color:#94a3b8;
+}
+
+main {
+    flex: 1;
+    display: flexbox;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid #1e293b;
+    font-size: 13px;
+    color: gray;
+}
+
+.top-tools-btn{
+    width: 64px;
+    height: 64px;
+    text-decoration: none;
+    color: white;
+    background: #1e293b;
+    border-radius: 12px;
+    border: solid 1px white;
+    padding: 8px;
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+}
+
+@media (max-width: 600px) {
+    header{
+        text-align: end;
+        padding: 30px;
+        border-bottom: 1px solid #1e293b;
+    }
+
+    header h1{
+        font-size: 35px;
+        color:#60a5fa;
+        font-size: 24px;
+    }
+
+    header p{
+        color:#94a3b8;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+}

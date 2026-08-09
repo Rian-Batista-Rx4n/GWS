@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GWS | Upload</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/upload.css')}}">
+    <script defer src="{{url_for('static', filename='js/upload.js')}}"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Upload Center</h1>
+        <p>Follow the Gray Wolf...</p>
+    </header>
+
+
+    <main>
+        <section class="upload-box">
+            <a class="back" href="javascript:history.back()">← Back</a>
+            <h2>File Upload</h2>
+            <input type="hidden" id="current" value="{{current}}">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <label>Destination</label>
+                    <select id="mode">
+                        <option value="current">Current Folder</option>
+                        <option value="category">Category</option>
+                    </select>
+                    
+                    <div id="categories" style="display:none;">
+                        <label>Category</label>
+                        <select id="category">
+                            <option value="">
+                                Select category
+                            </option>
+
+                            {% for item in folders %}
+
+                            <option value="{{item.category}}">
+                                {{item.category}}
+                            </option>
+                            {% endfor %}
+                        </select>
+
+                        <label>Subfolder</label>
+                        <select id="subfolder">
+                            <option value="">
+                                Select subfolder
+                            </option>
+                        </select>
+                    </div>
+
+                    <input type="file" multiple id="files">
+                    <button>Upload</button>
+                </form>
+
+                <div class="progress">
+                    <div id="bar"></div>
+                </div>
+                <p id="status">0%</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Developer: Rx4n</p>
+        <p>GWS: v1.0.0</p>
+        <p>©2026</p>
+    </footer>
+
+    <script>
+        let folders = {{folders|tojson}}
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#080d18;
+    color:white;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:30px;
+    border-bottom:1px solid #1e293b;
+}
+
+header h1{
+    font-size:35px;
+    color:#60a5fa;
+}
+
+header p{
+    color:#94a3b8;
+}
+
+
+/* MAIN */
+main{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-box{
+    width:350px;
+    background:#111827;
+    padding:30px;
+    border-radius:15px;
+    border:1px solid #1e293b;
+    text-align:center;
+}
+
+.logo{
+    width:90px;
+    margin-bottom:15px;
+}
+
+.back-btn {
+    width: 64px;
+    height: 64px;
+    text-decoration: none;
+    color: white;
+    background: #1e293b;
+    border-radius: 12px;
+    border: solid 1px white;
+    padding: 4px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 8px;
+    text-align: center;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    background:#1e293b;
+    border:none;
+    border-radius:8px;
+    color:white;
+}
+
+.password-box{
+    display:flex;
+    gap:5px;
+}
+
+.password-box button{
+    width:40px;
+    height: 40px;
+    margin-top: 8px;
+}
+
+button{
+    padding:12px;
+    width:100%;
+    background:#2563eb;
+    border:none;
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+    font-weight: bold;
+}
+
+button:hover{
+    background:#3b82f6;
+}
+
+footer{
+    padding:15px;
+    text-align:center;
+    border-top:1px solid #1e293b;
+    font-size:13px;
+    color:gray;
+}
+
+
+@media (max-width: 600px) {
+    header{
+        text-align: end;
+        padding: 30px;
+        border-bottom: 1px solid #1e293b;
+    }
+
+    header h1{
+        font-size: 35px;
+        color:#60a5fa;
+        font-size: 24px;
+    }
+
+    header p{
+        color:#94a3b8;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/register.css')}}"/>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='icons/graywolf_icon.png') }}" type="image/x-icon"/>
+    <script defer src="{{ url_for('static',filename='js/register.js') }}"></script>
+    <title>GWS | Register</title>
+</head>
+
+<body>
+    <header>
+        <h1>Gray Wolf System</h1>
+        <p><a style="color: white; text-decoration: none;" href="https://github.com/Rian-Batista-Rx4n/GWS">🐺 GWS on GitHub</a></p>
+    </header>
+
+    <main>
+        <div class="login-box">
+
+            <a href="javascript:history.back()" class="back-btn">← Back</a>
+
+            <h2>Create User</h2>
+
+            <form method="POST" action="/create_user">
+                <input name="username" placeholder="Username" required>
+                <input name="password" placeholder="Password" required>
+
+                <select name="role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+                <button>Create</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>Developer: Rx4n</p>
+        <p>GWS: v1.0.0</p>
+        <p>©2026</p>
+    </footer>
+</body>
+
+</html>

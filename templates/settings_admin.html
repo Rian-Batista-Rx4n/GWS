@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/settings.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='icons/graywolf_icon.png') }}" type="image/x-icon"/>
+    <script defer src="{{ url_for('static',filename='js/register.js') }}"></script>
+    <title>GWS | Settings</title>
+</head>
+
+<body>
+    <header>
+        <h1>Gray Wolf System</h1>
+        <p><a style="color: white; text-decoration: none;" href="https://github.com/Rian-Batista-Rx4n/GWS">🐺 GWS on GitHub</a></p>
+    </header>
+
+    <main>
+        <div class="top-tools">
+            <a href="/stats" class="top-tools-btn">📊 Stats</a>
+            <a href="/logs" class="top-tools-btn">📝 Logs</a>
+        </div>
+
+        <div class="panel">
+            <a href="javascript:history.back()" class="back-btn">← Back</a>
+
+            <h2>Users</h2>
+
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Storage</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for user in users %}
+
+                <tr>
+                    <td>
+                    {{user.username}}
+                    </td>
+                    <td>
+                    {{user.role}}
+                    </td>
+                    <td>
+                    {{user.storage}}
+                    </td>
+
+                    <td>
+                        <a href="/delete_user/{{user.username}}" onclick="return confirm('Delete user?')">❌</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <br>
+
+            <a href="/register">
+                <button>+ Add User</button>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Developer: Rx4n</p>
+        <p>GWS: v1.0.0</p>
+        <p>©2026</p>
+    </footer>
+</body>
+</html>
