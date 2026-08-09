@@ -6,6 +6,16 @@ Gray Wolf System (GWS) is a web-based file manager designed to transform almost 
 
 Whether running on an old desktop, Raspberry Pi, Linux server or even Android (Termux), GWS allows you to organize, browse, upload and manage files through a modern web interface.
 
+<details>
+<summary><strong>🐺 GWS - Preview Images 🖼️</strong></summary>
+
+| Zoom In | Zoom Out
+|:-:|:-:
+|<img src="https://github.com/Rian-Batista-Rx4n/GWS/blob/main/static/demo_images/dark_in_gws.jpg?raw=true" width="500px">|<img src="https://github.com/Rian-Batista-Rx4n/GWS/blob/main/static/demo_images/dark_out_gws.jpg?raw=true" width="500px">|
+|<img src="https://github.com/Rian-Batista-Rx4n/GWS/blob/main/static/demo_images/light_in_gws.jpg?raw=true" width="500px">|<img src="https://github.com/Rian-Batista-Rx4n/GWS/blob/main/static/demo_images/light_out_gws.jpg?raw=true" width="500px">|
+
+</details>
+
 ---
 
 # Features
