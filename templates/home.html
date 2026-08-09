@@ -82,7 +82,7 @@
                     {% if item.is_dir %}
                         <div class="icon">📁</div>
                     {% elif item.extension in [".png",".jpg",".jpeg",".gif",".webp"] %}
-                        <img loading="lazy" src="http://127.0.0.1:7777/open/{{item.path}}" alt="" class="image-thumbnail"><div class="icon-thumbnail">🖼</div>
+                        <img loading="lazy" src="/open/{{item.path}}" alt="" class="image-thumbnail"><div class="icon-thumbnail">🖼</div>
                     {% elif item.extension in [".mp4",".webm",".avi", ".mkv", ".mov", ".wmv"] %}
                         <div class="icon">🎥</div>
                     {% elif item.extension in [".mp3",".wav", ".ogg"] %}
